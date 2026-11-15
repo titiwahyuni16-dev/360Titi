@@ -19,7 +19,6 @@
       color: #0f172a;
     }
 
-    /* Custom Scrollbar halus */
     ::-webkit-scrollbar {
       width: 6px;
       height: 6px;
@@ -35,7 +34,6 @@
       background: #94a3b8;
     }
 
-    /* Tombol Skala Likert 1-5 yang Empuk & Interaktif */
     .scale-radio:checked + .scale-btn {
       background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
       color: #ffffff;
@@ -47,7 +45,6 @@
       color: #93c5fd;
     }
 
-    /* Kartu Kategori Responden Interaktif */
     .role-card.active {
       border-color: #1e3a8a;
       background-color: #eff6ff;
@@ -58,7 +55,6 @@
       transform: scale(1);
     }
 
-    /* Gaya Cetak Resmi A4 (Nota Dinas & Executive Summary) */
     @media print {
       @page {
         size: A4 portrait;
@@ -124,6 +120,11 @@
                 <span class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-blue-900/80 text-blue-200 border border-blue-700/70">
                   <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                   Kec. Serangpanjang & Kec. Sagalaherang • <span id="header-school-count">38</span> SD Binaan
+                </span>
+                <!-- Indikator Status Database Vercel Cloud -->
+                <span id="db-sync-badge" class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-500/20 text-amber-200 border border-amber-400/40">
+                  <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>
+                  Menghubungkan Database...
                 </span>
               </div>
               <p class="text-xs text-slate-300 mt-0.5">
@@ -248,7 +249,7 @@
             </div>
           </div>
 
-          <!-- Input Nama Pengawas Evaluator (Hanya Muncul Jika Peran = Pengawas Sekolah) -->
+          <!-- Input Nama Pengawas Evaluator -->
           <div id="pengawas-name-box" class="hidden w-full sm:w-80 bg-white p-3.5 rounded-xl border border-blue-200 shadow-sm">
             <label for="input-nama-pengawas" class="block text-[11px] font-extrabold uppercase tracking-wider text-blue-900 mb-1">
               Nama Pengawas Evaluator <span class="text-red-500">*</span>
@@ -260,7 +261,7 @@
       </div>
     </section>
 
-    <!-- LANGKAH 2: PILIH KATEGORI RESPONDEN 360° (5 KARTU VISUAL INTERAKTIF) -->
+    <!-- LANGKAH 2: PILIH KATEGORI RESPONDEN 360° -->
     <section class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden mb-6">
       <div class="px-6 py-4 bg-slate-900 text-white flex items-center justify-between">
         <div class="flex items-center gap-2.5">
@@ -274,7 +275,6 @@
         <input type="hidden" id="select-kategori" value="" />
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5" id="role-cards-grid">
           
-          <!-- Kartu 1: Pengawas Sekolah -->
           <button type="button" onclick="selectRoleCard('Pengawas Sekolah')" data-role="Pengawas Sekolah" class="role-card text-left p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-blue-400 transition-all relative flex flex-col justify-between group">
             <div class="role-check opacity-0 scale-75 transition-all absolute top-3 right-3 w-5 h-5 rounded-full bg-blue-900 text-white flex items-center justify-center text-xs font-bold">✓</div>
             <div>
@@ -287,7 +287,6 @@
             </div>
           </button>
 
-          <!-- Kartu 2: Guru -->
           <button type="button" onclick="selectRoleCard('Guru')" data-role="Guru" class="role-card text-left p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-blue-400 transition-all relative flex flex-col justify-between group">
             <div class="role-check opacity-0 scale-75 transition-all absolute top-3 right-3 w-5 h-5 rounded-full bg-blue-900 text-white flex items-center justify-center text-xs font-bold">✓</div>
             <div>
@@ -300,7 +299,6 @@
             </div>
           </button>
 
-          <!-- Kartu 3: Tata Usaha -->
           <button type="button" onclick="selectRoleCard('Tata Usaha')" data-role="Tata Usaha" class="role-card text-left p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-blue-400 transition-all relative flex flex-col justify-between group">
             <div class="role-check opacity-0 scale-75 transition-all absolute top-3 right-3 w-5 h-5 rounded-full bg-blue-900 text-white flex items-center justify-center text-xs font-bold">✓</div>
             <div>
@@ -313,7 +311,6 @@
             </div>
           </button>
 
-          <!-- Kartu 4: Orang Tua -->
           <button type="button" onclick="selectRoleCard('Orang Tua')" data-role="Orang Tua" class="role-card text-left p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-blue-400 transition-all relative flex flex-col justify-between group">
             <div class="role-check opacity-0 scale-75 transition-all absolute top-3 right-3 w-5 h-5 rounded-full bg-blue-900 text-white flex items-center justify-center text-xs font-bold">✓</div>
             <div>
@@ -326,7 +323,6 @@
             </div>
           </button>
 
-          <!-- Kartu 5: Murid -->
           <button type="button" onclick="selectRoleCard('Murid')" data-role="Murid" class="role-card text-left p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-blue-400 transition-all relative flex flex-col justify-between group">
             <div class="role-check opacity-0 scale-75 transition-all absolute top-3 right-3 w-5 h-5 rounded-full bg-blue-900 text-white flex items-center justify-center text-xs font-bold">✓</div>
             <div>
@@ -343,10 +339,8 @@
       </div>
     </section>
 
-    <!-- LANGKAH 3: PENGISIAN 30 BUTIR INSTRUMEN (5 DIMENSI KOMPETENSI) -->
+    <!-- LANGKAH 3: PENGISIAN 30 BUTIR INSTRUMEN -->
     <div id="step3-wrapper" class="hidden">
-      
-      <!-- Sticky Progress Bar & Panduan Skala -->
       <div class="bg-white/95 backdrop-blur-md rounded-2xl shadow-md border border-slate-200 p-4 sm:p-5 mb-6 sticky top-[76px] z-30">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
           <div>
@@ -363,7 +357,6 @@
           </div>
         </div>
 
-        <!-- Real-Time Progress Bar -->
         <div class="bg-slate-100 rounded-xl p-3 border border-slate-200">
           <div class="flex items-center justify-between text-xs font-bold mb-1.5">
             <span class="text-slate-700">Progres Pengisian Instrumen</span>
@@ -375,23 +368,19 @@
         </div>
       </div>
 
-      <!-- Form 30 Pertanyaan -->
       <form id="pkks-survey-form" onsubmit="handleFormSubmit(event)" class="space-y-6">
-        <div id="questions-container" class="space-y-6">
-          <!-- Dirender dinamis oleh JavaScript -->
-        </div>
+        <div id="questions-container" class="space-y-6"></div>
 
-        <!-- Panel Submit Bawah -->
         <div class="bg-slate-900 text-white rounded-2xl shadow-xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
             <div class="text-sm font-extrabold">Selesai Mengisi Seluruh 30 Sub-Indikator?</div>
-            <p class="text-xs text-slate-300 mt-0.5">Skor akan langsung dikalkulasi ke dalam pemetaan 5 Dimensi pada Executive Summary-PKKS.</p>
+            <p class="text-xs text-slate-300 mt-0.5">Skor akan langsung tersimpan ke Database Vercel dan dikalkulasi pada Executive Summary-PKKS.</p>
           </div>
           <div class="flex items-center gap-3 w-full sm:w-auto">
             <button type="button" onclick="autoFillDemo()" class="px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold border border-slate-700 transition">
               ⚡ Simulasi
             </button>
-            <button type="submit" class="flex-1 sm:flex-initial px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-sm font-extrabold shadow-lg transition flex items-center justify-center gap-2">
+            <button type="submit" id="btn-submit-survey" class="flex-1 sm:flex-initial px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-sm font-extrabold shadow-lg transition flex items-center justify-center gap-2">
               <span>Simpan & Kirim Penilaian 360°</span>
               <span>→</span>
             </button>
@@ -400,7 +389,6 @@
       </form>
     </div>
 
-    <!-- Empty State Sebelum Langkah 1 & 2 Lengkap -->
     <div id="empty-form-state" class="bg-white rounded-2xl border-2 border-dashed border-slate-300 p-10 text-center">
       <div class="w-14 h-14 rounded-2xl bg-blue-50 text-blue-800 flex items-center justify-center mx-auto mb-3 text-2xl shadow-inner">
         🧭
@@ -414,11 +402,10 @@
   </main>
 
   <!-- =====================================================================
-       TAB 2: EXECUTIVE SUMMARY-PKKS (DASHBOARD & NOTA DINAS SIAP CETAK PDF)
+       TAB 2: EXECUTIVE SUMMARY-PKKS
   ====================================================================== -->
   <section id="view-dashboard" class="hidden max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1">
 
-    <!-- Toolbar Filter & Cetak PDF (Disembunyikan saat Print) -->
     <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-5 mb-6 flex flex-col lg:flex-row lg:items-center justify-between gap-4 no-print">
       <div class="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3">
         <div class="flex items-center gap-2">
@@ -438,6 +425,9 @@
       </div>
 
       <div class="flex flex-wrap items-center gap-2.5 justify-end">
+        <button onclick="syncFromServer(true)" class="px-3.5 py-2.5 rounded-xl border border-blue-300 bg-blue-50 hover:bg-blue-100 text-blue-900 text-xs font-extrabold transition">
+          🔄 Segarkan Data Server
+        </button>
         <button onclick="resetEvaluationsToSeed()" class="px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold transition">
           ↺ Reset Simulasi Skor
         </button>
@@ -448,10 +438,8 @@
       </div>
     </div>
 
-    <!-- DOKUMEN LAPORAN EXECUTIVE BRIEF (AREA CETAK A4) -->
     <div class="bg-white rounded-3xl shadow-md border border-slate-200 p-6 sm:p-10 print-container">
 
-      <!-- KOP RESMI LAPORAN -->
       <div class="border-b-4 border-slate-900 pb-5 mb-7 flex flex-col lg:flex-row lg:items-start justify-between gap-4 avoid-break">
         <div>
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-blue-950 text-white text-[11px] font-bold uppercase tracking-widest mb-2">
@@ -474,9 +462,7 @@
         </div>
       </div>
 
-      <!-- 4 KARTU KPI UTAMA DENGAN AKSEN GARIS ATAS BERWARNA -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 avoid-break">
-        <!-- KPI 1 -->
         <div class="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-blue-900 p-4 shadow-sm">
           <div class="flex items-center justify-between mb-2">
             <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-500">Total Sekolah Binaan</span>
@@ -486,48 +472,42 @@
           <div id="kpi-total-sub" class="text-xs font-medium text-slate-500 mt-1">16 Serangpanjang & 22 Sagalaherang</div>
         </div>
 
-        <!-- KPI 2 -->
         <div class="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-emerald-600 p-4 shadow-sm">
           <div class="flex items-center justify-between mb-2">
             <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-500">Rata-Rata Komposit</span>
             <span class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center text-sm">📈</span>
           </div>
           <div class="flex items-baseline gap-2">
-            <span id="kpi-rata-rata" class="text-2xl font-extrabold text-emerald-700">4.46</span>
+            <span id="kpi-rata-rata" class="text-2xl font-extrabold text-emerald-700">0.00</span>
             <span class="text-xs font-bold text-slate-400">/ 5.00</span>
           </div>
           <div class="mt-1.5">
             <span id="kpi-predikat-badge" class="inline-block px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-emerald-100 text-emerald-800">
-              Level 5 (Ahli)
+              Menunggu Data
             </span>
           </div>
         </div>
 
-        <!-- KPI 3 -->
         <div class="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-indigo-600 p-4 shadow-sm">
           <div class="flex items-center justify-between mb-2">
             <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-500">Capaian Level 5 (Ahli)</span>
             <span class="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-700 flex items-center justify-center text-sm">🏆</span>
           </div>
-          <div id="kpi-ahli-count" class="text-2xl font-extrabold text-indigo-900">34 SD (89.5%)</div>
+          <div id="kpi-ahli-count" class="text-2xl font-extrabold text-indigo-900">0 SD (0.0%)</div>
           <div id="kpi-ahli-sub" class="text-xs font-medium text-slate-500 mt-1">Skor Komposit ≥ 4.20 (Predikat Ahli)</div>
         </div>
 
-        <!-- KPI 4 -->
         <div class="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-amber-600 p-4 shadow-sm">
           <div class="flex items-center justify-between mb-2">
             <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-500">Area Perhatian Pembinaan</span>
             <span class="w-7 h-7 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center text-sm">🎯</span>
           </div>
-          <div id="kpi-perhatian-sekolah" class="text-base font-extrabold text-red-700 truncate">SDN RESTUAGUNG</div>
-          <div id="kpi-perhatian-detail" class="text-xs font-semibold text-slate-600 mt-1">Manajerial: 3.35 (Prioritas Klinis)</div>
+          <div id="kpi-perhatian-sekolah" class="text-base font-extrabold text-red-700 truncate">-</div>
+          <div id="kpi-perhatian-detail" class="text-xs font-semibold text-slate-600 mt-1">Belum ada data evaluasi</div>
         </div>
       </div>
 
-      <!-- VISUALISASI GRAFIK INTERAKTIF (GRID 2 KOLOM RESPONSIF) -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8 avoid-break">
-        
-        <!-- Grafik 1: Peringkat Skor Komposit Sekolah Binaan -->
         <div class="rounded-2xl border border-slate-200 p-5 bg-slate-50/40">
           <div class="flex items-center justify-between mb-1">
             <h3 class="text-sm font-extrabold text-slate-900">Peringkat Skor Komposit Kepala Sekolah</h3>
@@ -539,7 +519,6 @@
           </div>
         </div>
 
-        <!-- Grafik 2: Radar (Jaring Laba-Laba) 5 Dimensi Kompetensi -->
         <div class="rounded-2xl border border-slate-200 p-5 bg-slate-50/40">
           <div class="flex items-center justify-between mb-1">
             <h3 class="text-sm font-extrabold text-slate-900">Radar Profil 5 Dimensi Kompetensi</h3>
@@ -550,10 +529,8 @@
             <canvas id="chart-radar"></canvas>
           </div>
         </div>
-
       </div>
 
-      <!-- Grafik 3 (Lebar Penuh): Triangulasi Multi-Rater 360° -->
       <div class="rounded-2xl border border-slate-200 p-5 bg-slate-50/40 mb-8 avoid-break">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-3">
           <div>
@@ -561,7 +538,7 @@
             <p class="text-[11px] text-slate-500">Perbandingan objektif persepsi Pengawas Sekolah, Guru, Tata Usaha/Tendik, Orang Tua/Wali, dan Murid</p>
           </div>
           <span id="total-responden-badge" class="text-xs font-bold px-3 py-1 rounded-full bg-slate-900 text-white self-start">
-            Total 190 Responden 360°
+            Total 0 Responden 360°
           </span>
         </div>
         <div class="h-56 relative">
@@ -569,13 +546,11 @@
         </div>
       </div>
 
-      <!-- TABEL REKAPITULASI CAPAIAN KEPALA SEKOLAH BINAAN -->
       <div class="mb-8">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
           <h3 class="text-sm font-extrabold text-slate-900 uppercase tracking-wider border-l-4 border-blue-900 pl-3">
             Rekapitulasi Capaian & Rincian 5 Dimensi Kepala Sekolah
           </h3>
-          <!-- Pencarian Cepat Tabel (Disembunyikan saat Print) -->
           <div class="relative w-full sm:w-72 no-print">
             <input type="text" id="dashboard-table-search" oninput="renderDashboard()" placeholder="Cari SD atau nama Kepala Sekolah..." class="w-full rounded-xl border border-slate-300 bg-slate-50 pl-9 pr-3 py-1.5 text-xs font-medium text-slate-800 focus:border-blue-700 focus:bg-white outline-none" />
             <svg class="w-4 h-4 text-slate-400 absolute left-3 top-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
@@ -598,38 +573,28 @@
                 <th class="py-3 px-3 font-bold">Predikat</th>
               </tr>
             </thead>
-            <tbody id="rekap-table-body" class="divide-y divide-slate-200 bg-white">
-              <!-- Diisi dinamis oleh JS -->
-            </tbody>
+            <tbody id="rekap-table-body" class="divide-y divide-slate-200 bg-white"></tbody>
           </table>
         </div>
       </div>
 
-      <!-- CATATAN KUNCI EVALUASI & REKOMENDASI STRATEGIS KEPALA DINAS -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-10 avoid-break">
-        <!-- Catatan Kunci -->
         <div class="lg:col-span-5 rounded-2xl border border-slate-200 bg-slate-50 p-5">
           <h4 class="text-xs font-extrabold uppercase tracking-wider text-slate-900 mb-3 flex items-center gap-2">
             <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
             Catatan Kunci Hasil Evaluasi 360°
           </h4>
-          <div id="key-notes-box" class="space-y-2.5 text-xs text-slate-700 leading-relaxed">
-            <!-- Diisi dinamis -->
-          </div>
+          <div id="key-notes-box" class="space-y-2.5 text-xs text-slate-700 leading-relaxed"></div>
         </div>
 
-        <!-- Rekomendasi Strategis Kadis -->
         <div class="lg:col-span-7 rounded-2xl border border-blue-200 bg-blue-50/40 overflow-hidden">
           <div class="bg-blue-950 text-white px-5 py-3 text-xs font-extrabold uppercase tracking-wider">
             Rekomendasi Strategis Kepala Dinas (Action Plan Pengawas Pembina)
           </div>
-          <div id="strategic-recommendations" class="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-slate-700 leading-relaxed">
-            <!-- Diisi dinamis -->
-          </div>
+          <div id="strategic-recommendations" class="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-slate-700 leading-relaxed"></div>
         </div>
       </div>
 
-      <!-- BLOK TANDA TANGAN PENGESAHAN RESMI (2 KOLOM SEIMBANG) -->
       <div class="pt-6 border-t-2 border-slate-300 grid grid-cols-1 sm:grid-cols-2 gap-8 text-xs text-slate-900 serif-print avoid-break">
         <div class="sm:pl-6">
           <p>Mengetahui / Menyetujui,</p>
@@ -655,20 +620,19 @@
   </section>
 
   <!-- =====================================================================
-       TAB 3: KELOLA DATA SEKOLAH & KEPALA SEKOLAH (CRUD + LOCALSTORAGE)
+       TAB 3: KELOLA DATA SEKOLAH & KEPALA SEKOLAH
   ====================================================================== -->
   <section id="view-manage" class="hidden max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 no-print">
 
-    <!-- Ringkasan & Toolbar Manajemen Data -->
     <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6">
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-5 border-b border-slate-200">
         <div>
           <span class="inline-block px-2.5 py-0.5 rounded-md bg-amber-100 text-amber-900 text-[11px] font-extrabold uppercase tracking-wider mb-1">
-            Database Master Wilayah Binaan
+            Database Master Wilayah Binaan (Vercel Cloud)
           </span>
           <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">Kelola Data Sekolah Dasar & Kepala Sekolah</h2>
           <p class="text-xs sm:text-sm text-slate-600 mt-0.5">
-            Perubahan data nama sekolah, nama Kepala Sekolah, atau status jabatan (Definitif / Plt) otomatis tersimpan dan langsung diperbarui pada Instrumen 360° & Executive Summary.
+            Perubahan data nama sekolah, nama Kepala Sekolah, atau status jabatan otomatis tersimpan di Database Vercel dan langsung diperbarui pada seluruh perangkat.
           </p>
         </div>
 
@@ -685,7 +649,6 @@
         </div>
       </div>
 
-      <!-- Ringkasan Jumlah SD per Kecamatan & Filter Pencarian -->
       <div class="pt-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div class="flex flex-wrap items-center gap-2.5">
           <span id="badge-count-all" class="px-3 py-1.5 rounded-xl bg-slate-900 text-white text-xs font-extrabold">
@@ -714,7 +677,6 @@
       </div>
     </div>
 
-    <!-- Grafik Monitoring Kelengkapan 5 Instrumen per Sekolah (Menu 3) -->
     <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6">
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-4">
         <div>
@@ -748,7 +710,6 @@
       </div>
     </div>
 
-    <!-- Tabel Daftar Sekolah & Kepala Sekolah -->
     <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
       <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse text-xs sm:text-sm">
@@ -763,21 +724,19 @@
               <th class="py-3.5 px-4 font-bold text-center w-36">Aksi</th>
             </tr>
           </thead>
-          <tbody id="manage-table-body" class="divide-y divide-slate-200">
-            <!-- Diisi dinamis oleh JS -->
-          </tbody>
+          <tbody id="manage-table-body" class="divide-y divide-slate-200"></tbody>
         </table>
       </div>
     </div>
 
   </section>
 
-  <!-- MODAL POP-UP TAMBAH / EDIT SEKOLAH & KEPALA SEKOLAH -->
+  <!-- MODAL TAMBAH / EDIT SEKOLAH -->
   <div id="school-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 backdrop-blur-sm p-4 no-print">
     <div class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-md w-full overflow-hidden transform transition-all">
       <div class="bg-slate-900 text-white px-6 py-4 flex items-center justify-between">
         <h3 id="modal-title" class="text-base font-extrabold">Edit Data Sekolah & Kepala Sekolah</h3>
-        <button type="button" onclick="closeSchoolModal()" class="text-slate-400 hover:text-white text-xl font-bold leading-none">&times;</button>
+        <button type="button" onclick="closeSchoolModal()" class="text-slate-400 hover:text-white text-xl font-bold leading-none">×</button>
       </div>
 
       <form onsubmit="saveSchoolModal(event)" class="p-6 space-y-4">
@@ -839,7 +798,7 @@
     </div>
   </div>
 
-  <!-- MODAL KONFIRMASI HAPUS (PENGGANTI confirm()) -->
+  <!-- MODAL KONFIRMASI HAPUS -->
   <div id="delete-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 backdrop-blur-sm p-4 no-print">
     <div class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-sm w-full p-6 text-center">
       <div class="w-12 h-12 rounded-2xl bg-red-100 text-red-700 flex items-center justify-center mx-auto mb-3 text-xl">
@@ -864,7 +823,7 @@
   <div id="pin-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/75 backdrop-blur-sm p-4 no-print">
     <div class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-sm w-full overflow-hidden transform transition-all">
       <div class="bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 text-white px-6 py-5 text-center relative">
-        <button type="button" onclick="closePinModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl font-bold leading-none">&times;</button>
+        <button type="button" onclick="closePinModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl font-bold leading-none">×</button>
         <div class="w-12 h-12 rounded-2xl bg-amber-400/20 border border-amber-400/40 text-amber-300 flex items-center justify-center mx-auto mb-2.5 text-2xl">
           🔐
         </div>
@@ -885,7 +844,6 @@
           </p>
         </div>
 
-        <!-- Keypad Angka Cepat untuk Layar Sentuh / HP -->
         <div class="grid grid-cols-3 gap-2 mb-5">
           <button type="button" onclick="appendPinDigit('1')" class="py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 active:bg-blue-100 text-slate-900 font-extrabold text-sm transition">1</button>
           <button type="button" onclick="appendPinDigit('2')" class="py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 active:bg-blue-100 text-slate-900 font-extrabold text-sm transition">2</button>
@@ -919,15 +877,14 @@
   </footer>
 
   <!-- =====================================================================
-       LOGIKA JAVASCRIPT LENGKAP
+       LOGIKA JAVASCRIPT TERHUBUNG DATABASE VERCEL (/api/pkks)
   ====================================================================== -->
   <script>
+    const API_ENDPOINT = "/api/pkks";
     const STORAGE_KEY_SCHOOLS = "epkks_subang_schools_v3";
     const STORAGE_KEY_EVALS = "epkks_subang_evals_v3";
 
-    // DATABASE PRESISI 38 SEKOLAH DASAR (16 SERANGPANJANG + 22 SAGALAHERANG)
     const INITIAL_SCHOOLS = [
-      // KECAMATAN SERANGPANJANG (16 SD)
       { id: "SP-01", kecamatan: "Serangpanjang", nama: "SDN ARJASARI", kepsek: "AGUS AHMAD ZAKARIA, S.Pd", status: "Plt" },
       { id: "SP-02", kecamatan: "Serangpanjang", nama: "SDN CINTAMEKAR", kepsek: "YATI NURHAYATI, S.Pd, MM", status: "Plt" },
       { id: "SP-03", kecamatan: "Serangpanjang", nama: "SDN CIPANCAR", kepsek: "CUCU CAHYATI, S.Pd", status: "Plt" },
@@ -944,8 +901,6 @@
       { id: "SP-14", kecamatan: "Serangpanjang", nama: "SDN SARANGSARI", kepsek: "ADE RAHMAT, S.Pd", status: "Definitif" },
       { id: "SP-15", kecamatan: "Serangpanjang", nama: "SDN TUNAS KARYA", kepsek: "CUCU CAHYATI, S.Pd", status: "Definitif" },
       { id: "SP-16", kecamatan: "Serangpanjang", nama: "SDN PONGGANG", kepsek: "YAYAT RUHIYAT, S.Pd", status: "Plt" },
-
-      // KECAMATAN SAGALAHERANG (22 SD)
       { id: "SG-01", kecamatan: "Sagalaherang", nama: "SDN SAGALAHERANG IV", kepsek: "NITA ROSYANA, S.Pd.,MM.Pd", status: "Definitif" },
       { id: "SG-02", kecamatan: "Sagalaherang", nama: "SDN SUKAMANDI II", kepsek: "RAHAYU, S. Pd.", status: "Definitif" },
       { id: "SG-03", kecamatan: "Sagalaherang", nama: "SDN EKANUGRAHA", kepsek: "DEDE HAYATI,S.Pd", status: "Definitif" },
@@ -970,12 +925,6 @@
       { id: "SG-22", kecamatan: "Sagalaherang", nama: "SDN CICADAS", kepsek: "IKA DEWI SARTIKA, S.Pd", status: "Plt" }
     ];
 
-    // PEMETAAN 5 DIMENSI KOMPETENSI SESUAI INSTRUKSI:
-    // 1. Kepribadian [No 1-6]
-    // 2. Sosial [No 7-16]
-    // 3. Profesional [No 17-20]
-    // 4. Manajerial [No 21-27]
-    // 5. Kewirausahaan [No 28-30]
     const DIMENSIONS_MAP = [
       { key: "Kepribadian", label: "1. Kepribadian", short: "Kepribadian", range: [1, 6], badge: "bg-indigo-100 text-indigo-900 border-indigo-200", headerBg: "from-indigo-950 to-blue-900" },
       { key: "Sosial", label: "2. Sosial", short: "Sosial", range: [7, 16], badge: "bg-emerald-100 text-emerald-900 border-emerald-200", headerBg: "from-emerald-900 to-teal-800" },
@@ -984,7 +933,6 @@
       { key: "Kewirausahaan", label: "5. Kewirausahaan", short: "Kewirausahaan", range: [28, 30], badge: "bg-purple-100 text-purple-900 border-purple-200", headerBg: "from-purple-950 to-indigo-900" }
     ];
 
-    // BANK 30 BUTIR INSTRUMEN LENGKAP UNTUK 5 PERAN RESPONDEN
     const INSTRUMENTS_DB = {
       "Pengawas Sekolah": {
         title: "Instrumen PKKS 2026 — Responden Pengawas Sekolah",
@@ -1173,7 +1121,6 @@
       }
     };
 
-    // STATE UTAMA APLIKASI
     let schools = [];
     let evaluations = [];
     let rankingChart = null;
@@ -1184,8 +1131,23 @@
     let pendingTargetTab = null;
     const ADMIN_PIN = "99";
 
-    // 1. INISIALISASI STATE & PENYIMPANAN LOKAL (LOCALSTORAGE)
-    function loadState() {
+    function updateSyncBadge(status, text) {
+      const badge = document.getElementById("db-sync-badge");
+      if (!badge) return;
+      if (status === "connected") {
+        badge.className = "inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-200 border border-emerald-400/50";
+        badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> ${text || "Database Vercel Aktif"}`;
+      } else if (status === "syncing") {
+        badge.className = "inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-blue-500/20 text-blue-200 border border-blue-400/50";
+        badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-blue-400 animate-ping"></span> ${text || "Menyinkronkan..."}`;
+      } else {
+        badge.className = "inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-red-500/20 text-red-200 border border-red-400/50";
+        badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-red-400"></span> ${text || "Mode Lokal (Offline)"}`;
+      }
+    }
+
+    // 1. INISIALISASI & SINKRONISASI KE VERCEL REDIS (/api/pkks)
+    async function loadState() {
       try {
         const savedSchools = localStorage.getItem(STORAGE_KEY_SCHOOLS);
         schools = savedSchools ? JSON.parse(savedSchools) : JSON.parse(JSON.stringify(INITIAL_SCHOOLS));
@@ -1198,35 +1160,89 @@
 
       try {
         const savedEvals = localStorage.getItem(STORAGE_KEY_EVALS);
-        // Default awal kosong ([]) sesuai permintaan agar terlihat jelas sekolah yang sudah & belum mengisi
         evaluations = savedEvals ? JSON.parse(savedEvals) : [];
-        if (!Array.isArray(evaluations)) {
-          evaluations = [];
-        }
+        if (!Array.isArray(evaluations)) evaluations = [];
       } catch (err) {
         evaluations = [];
       }
 
-      saveSchoolsToStorage();
-      saveEvalsToStorage();
       updateSchoolCountBadges();
       handleKecamatanChange();
+      await syncFromServer(false);
+    }
+
+    async function syncFromServer(notifyUser = false) {
+      updateSyncBadge("syncing", "Sinkronisasi Server...");
+      try {
+        const res = await fetch(API_ENDPOINT, { method: "GET", cache: "no-store" });
+        if (!res.ok) throw new Error("Gagal terhubung ke /api/pkks");
+        const data = await res.json();
+
+        if (Array.isArray(data.schools) && data.schools.length > 0) {
+          schools = data.schools;
+          localStorage.setItem(STORAGE_KEY_SCHOOLS, JSON.stringify(schools));
+        } else {
+          // Inisialisasi daftar 38 SD pertama kali ke database Redis
+          await pushToServer({ action: "SAVE_SCHOOLS", schools });
+        }
+
+        if (Array.isArray(data.evaluations)) {
+          evaluations = data.evaluations;
+          localStorage.setItem(STORAGE_KEY_EVALS, JSON.stringify(evaluations));
+        }
+
+        updateSchoolCountBadges();
+        handleKecamatanChange();
+        if (!document.getElementById("view-dashboard").classList.contains("hidden")) {
+          renderDashboard();
+        }
+        if (!document.getElementById("view-manage").classList.contains("hidden")) {
+          renderManageTable();
+        }
+
+        updateSyncBadge("connected", `Database Vercel Aktif (${evaluations.length} Data)`);
+        if (notifyUser) showToast("Data terbaru berhasil disinkronkan dari Database Vercel.", "success");
+      } catch (err) {
+        console.warn("Server sync warning:", err);
+        updateSyncBadge("offline", "Mode Lokal (Cek DB)");
+        if (notifyUser) showToast("Gagal terhubung ke server Vercel. Pastikan Upstash Redis sudah terhubung.", "error");
+      }
+    }
+
+    async function pushToServer(payload) {
+      updateSyncBadge("syncing", "Menyimpan ke Cloud...");
+      try {
+        const res = await fetch(API_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) throw new Error("Gagal menyimpan ke server");
+        const result = await res.json();
+        const total = result.total !== undefined ? result.total : evaluations.length;
+        updateSyncBadge("connected", `Database Vercel Aktif (${total} Data)`);
+        return true;
+      } catch (err) {
+        console.error("Push error:", err);
+        updateSyncBadge("offline", "Gagal Simpan Cloud");
+        return false;
+      }
     }
 
     function saveSchoolsToStorage() {
       try {
         localStorage.setItem(STORAGE_KEY_SCHOOLS, JSON.stringify(schools));
-      } catch (e) {
-        console.warn("Gagal menyimpan data sekolah ke localStorage:", e);
-      }
+      } catch (e) {}
       updateSchoolCountBadges();
+      pushToServer({ action: "SAVE_SCHOOLS", schools });
     }
 
-    function saveEvalsToStorage() {
+    function saveEvalsToStorage(syncMode = "REPLACE") {
       try {
         localStorage.setItem(STORAGE_KEY_EVALS, JSON.stringify(evaluations));
-      } catch (e) {
-        console.warn("Gagal menyimpan data evaluasi ke localStorage:", e);
+      } catch (e) {}
+      if (syncMode === "REPLACE") {
+        pushToServer({ action: "REPLACE_EVALS", evaluations });
       }
     }
 
@@ -1259,12 +1275,10 @@
       }
     }
 
-    // DATA SIMULASI AWAL 360° (5 RESPONDEN PER SEKOLAH) AGAR DASHBOARD LANGSUNG INFORMATIF
     function generateInitialEvaluations() {
       const roles = ["Pengawas Sekolah", "Guru", "Tata Usaha", "Orang Tua", "Murid"];
       const seed = [];
       schools.forEach((sch, idx) => {
-        // Profil kinerja realistis untuk 38 SD (sebagian besar Level 5 Ahli, beberapa prioritas klinis)
         const isPriority = sch.id === "SG-19" || sch.id === "SP-12" || sch.id === "SG-22";
         const baseScore = isPriority ? 3.55 : (4.30 + ((idx * 7) % 60) / 100);
 
@@ -1464,7 +1478,6 @@
                   </div>
                 </div>
 
-                <!-- Tombol Skala 1 - 5 Utuh Tanpa Terpotong -->
                 <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 sm:pl-10">
                   ${[1, 2, 3, 4, 5].map(val => `
                     <label class="cursor-pointer flex">
@@ -1519,7 +1532,7 @@
       showToast("Simulasi skor otomatis (4 & 5) telah diisi untuk 30 butir.", "info");
     }
 
-    function handleFormSubmit(e) {
+    async function handleFormSubmit(e) {
       e.preventDefault();
       const schId = document.getElementById("select-sekolah").value;
       const kat = document.getElementById("select-kategori").value;
@@ -1558,21 +1571,40 @@
         ? (document.getElementById("input-nama-pengawas").value.trim() || "Titi Wahyuni, S.Pd")
         : `Responden ${kat} (Anonim)`;
 
-      evaluations.push({
-        id: `EVAL-${Date.now()}`,
+      const newEval = {
+        id: `EVAL-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
         schoolId: sch.id,
         role: kat,
         evaluator: evaluatorName,
+        rawAnswers,
         dimScores,
         composite,
         timestamp: new Date().toISOString()
-      });
+      };
 
-      saveEvalsToStorage();
+      const submitBtn = document.getElementById("btn-submit-survey");
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<span>Menyimpan ke Database Vercel...</span>`;
+      }
+
+      evaluations.push(newEval);
+      saveEvalsToStorage("NONE");
+      const savedCloud = await pushToServer({ action: "ADD_EVAL", evaluation: newEval });
+
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<span>Simpan & Kirim Penilaian 360°</span><span>→</span>`;
+      }
+
       document.getElementById("pkks-survey-form").reset();
       updateProgressBar();
 
-      showToast(`Terima kasih! Penilaian ${kat} untuk ${sch.nama} berhasil disimpan.`, "success");
+      if (savedCloud) {
+        showToast(`Terima kasih! Penilaian ${kat} untuk ${sch.nama} berhasil tersimpan di Database Vercel.`, "success");
+      } else {
+        showToast(`Penilaian tersimpan sementara di perangkat (koneksi server terganggu).`, "error");
+      }
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
@@ -1582,8 +1614,10 @@
         return { label: "Level 5 (Ahli)", short: "Ahli", badgeClass: "bg-emerald-100 text-emerald-900 border border-emerald-300" };
       } else if (score >= 3.40) {
         return { label: "Level 4 (Mumpuni)", short: "Mumpuni", badgeClass: "bg-blue-100 text-blue-900 border border-blue-300" };
-      } else {
+      } else if (score > 0) {
         return { label: "Level 3 (Cakap / Pembinaan)", short: "Perlu Pembinaan", badgeClass: "bg-red-100 text-red-900 border border-red-300" };
+      } else {
+        return { label: "Belum Dinilai", short: "Kosong", badgeClass: "bg-slate-100 text-slate-600 border border-slate-300" };
       }
     }
 
@@ -1623,7 +1657,6 @@
         targetSchools = targetSchools.filter(s => s.id === schFilter);
       }
 
-      // Hitung agregasi skor per sekolah dari seluruh rater 360°
       const schoolStats = targetSchools.map(sch => {
         const schEvals = evaluations.filter(ev => ev.schoolId === sch.id);
         const dims = { Kepribadian: 0, Sosial: 0, Profesional: 0, Manajerial: 0, Kewirausahaan: 0 };
@@ -1652,10 +1685,8 @@
         };
       });
 
-      // Urutkan skor tertinggi ke terendah
       const sortedStats = [...schoolStats].sort((a, b) => b.composite - a.composite);
 
-      // Update Subtitle & KPI
       const subtitleEl = document.getElementById("exec-subtitle");
       if (schFilter !== "ALL" && sortedStats.length === 1) {
         const s = sortedStats[0];
@@ -1693,7 +1724,6 @@
       document.getElementById("kpi-ahli-count").textContent = `${ahliCount} SD (${ahliPct}%)`;
       document.getElementById("kpi-ahli-sub").textContent = `Dari ${validSchools.length} SD dengan skor ≥ 4.20`;
 
-      // Cari sekolah/dimensi prioritas pembinaan
       const lowestSchool = validSchools.length > 0 ? validSchools[validSchools.length - 1] : null;
       if (lowestSchool) {
         let minDimKey = "Manajerial";
@@ -1711,7 +1741,6 @@
         document.getElementById("kpi-perhatian-detail").textContent = "Belum ada data evaluasi";
       }
 
-      // Hitung rata-rata 5 dimensi & 5 rater untuk grafik
       const avgDims = { Kepribadian: 0, Sosial: 0, Profesional: 0, Manajerial: 0, Kewirausahaan: 0 };
       if (validSchools.length > 0) {
         validSchools.forEach(s => {
@@ -1742,7 +1771,6 @@
     }
 
     function renderCharts(sortedStats, avgDims, roles, raterAverages) {
-      // 1. Grafik Peringkat (Top 8 + 2 Terbawah jika lebih dari 10 sekolah)
       let displaySchools = sortedStats;
       if (sortedStats.length > 10) {
         displaySchools = [...sortedStats.slice(0, 8), ...sortedStats.slice(-2)];
@@ -1788,7 +1816,6 @@
         }
       });
 
-      // 2. Grafik Radar 5 Dimensi
       const ctxRadar = document.getElementById("chart-radar").getContext("2d");
       if (radarChart) radarChart.destroy();
       radarChart = new Chart(ctxRadar, {
@@ -1821,9 +1848,9 @@
           maintainAspectRatio: false,
           scales: {
             r: {
-              min: 2.5,
+              min: 0,
               max: 5.0,
-              ticks: { stepSize: 0.5, font: { size: 9 } },
+              ticks: { stepSize: 1, font: { size: 9 } },
               pointLabels: { font: { size: 11, weight: "bold" }, color: "#0f172a" }
             }
           },
@@ -1833,7 +1860,6 @@
         }
       });
 
-      // 3. Grafik Triangulasi Multi-Rater
       const ctxRater = document.getElementById("chart-rater").getContext("2d");
       if (raterChart) raterChart.destroy();
       raterChart = new Chart(ctxRater, {
@@ -1851,9 +1877,7 @@
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          plugins: {
-            legend: { display: false }
-          },
+          plugins: { legend: { display: false } },
           scales: {
             y: { min: 0, max: 5, grid: { color: "#e2e8f0" }, ticks: { font: { size: 10, weight: "bold" } } },
             x: { grid: { display: false }, ticks: { font: { size: 11, weight: "bold" }, color: "#0f172a" } }
@@ -1891,7 +1915,7 @@
             <td class="py-2.5 px-2 text-center font-semibold text-slate-700">${s.dims.Kepribadian.toFixed(2)}</td>
             <td class="py-2.5 px-2 text-center font-semibold text-slate-700">${s.dims.Sosial.toFixed(2)}</td>
             <td class="py-2.5 px-2 text-center font-semibold text-slate-700">${s.dims.Profesional.toFixed(2)}</td>
-            <td class="py-2.5 px-2 text-center font-semibold ${s.dims.Manajerial < 3.60 ? "text-red-700 font-extrabold" : "text-slate-700"}">${s.dims.Manajerial.toFixed(2)}</td>
+            <td class="py-2.5 px-2 text-center font-semibold ${s.dims.Manajerial > 0 && s.dims.Manajerial < 3.60 ? "text-red-700 font-extrabold" : "text-slate-700"}">${s.dims.Manajerial.toFixed(2)}</td>
             <td class="py-2.5 px-2 text-center font-semibold text-slate-700">${s.dims.Kewirausahaan.toFixed(2)}</td>
             <td class="py-2.5 px-3 text-center">
               <span class="inline-block px-2.5 py-1 rounded-lg bg-slate-900 text-white font-extrabold">${s.composite.toFixed(2)}</span>
@@ -1914,7 +1938,7 @@
         notesBox.innerHTML = `
           <p>• <strong>Status Pengumpulan Data 360°:</strong> Belum ada responden yang mengirimkan isian instrumen untuk filter sekolah/kecamatan ini (0 dari ${sortedStats.length} SD).</p>
           <p>• <strong>Pemetaan Jabatan Kepala Sekolah:</strong> Terdaftar <strong>${sortedStats.filter(s => s.status === "Definitif").length} Kepala Sekolah Definitif</strong> dan <strong>${sortedStats.filter(s => s.status === "Plt").length} Pelaksana Tugas (Plt)</strong> siap dinilai.</p>
-          <p>• <strong>Langkah Selanjutnya:</strong> Silakan arahkan responden (Pengawas, Guru, TU, Orang Tua, dan Murid) mengisi instrumen pada Tab 1.</p>
+          <p>• <strong>Langkah Selanjutnya:</strong> Bagikan link publik Vercel ini kepada Pengawas, Guru, TU, Orang Tua, dan Murid untuk mengisi instrumen pada Tab 1.</p>
         `;
         recBox.innerHTML = `
           <div class="bg-white p-3.5 rounded-xl border border-blue-100 shadow-sm sm:col-span-2">
@@ -1925,7 +1949,6 @@
         return;
       }
 
-      // Temukan dimensi terkuat
       let topDim = "Kepribadian";
       let topVal = avgDims.Kepribadian;
       DIMENSIONS_MAP.forEach(d => {
@@ -1967,25 +1990,25 @@
 
     function resetEvaluationsToSeed() {
       evaluations = generateInitialEvaluations();
-      saveEvalsToStorage();
+      saveEvalsToStorage("REPLACE");
       renderDashboard();
       if (!document.getElementById("view-manage").classList.contains("hidden")) {
         renderManageTable();
       }
-      showToast("Data simulasi skor 360° (38 SD lengkap 5 instrumen) berhasil dimuat.", "info");
+      showToast("Data simulasi skor 360° (38 SD lengkap 5 instrumen) berhasil dimuat ke Database Vercel.", "info");
     }
 
     function clearAllEvaluations() {
       evaluations = [];
-      saveEvalsToStorage();
+      saveEvalsToStorage("REPLACE");
       renderManageTable();
       if (!document.getElementById("view-dashboard").classList.contains("hidden")) {
         renderDashboard();
       }
-      showToast("Seluruh isian instrumen telah dikosongkan kembali (0/5).", "info");
+      showToast("Seluruh isian instrumen di Database Vercel telah dikosongkan (0/5).", "info");
     }
 
-    // 4. LOGIKA TAB 3: KELOLA DATA SEKOLAH & KEPALA SEKOLAH (CRUD + GRAFIK KELENGKAPAN 5 INSTRUMEN)
+    // 4. LOGIKA TAB 3: KELOLA DATA SEKOLAH & GRAFIK KELENGKAPAN
     function renderManageCompletionChart(filteredSchools) {
       const rolesList = [
         { key: "Pengawas Sekolah", short: "Pengawas" },
@@ -2063,13 +2086,9 @@
             },
             tooltip: {
               callbacks: {
-                title: (items) => {
-                  const idx = items[0].dataIndex;
-                  return schoolDetails[idx].nama;
-                },
+                title: (items) => schoolDetails[items[0].dataIndex].nama,
                 afterBody: (items) => {
-                  const idx = items[0].dataIndex;
-                  const info = schoolDetails[idx];
+                  const info = schoolDetails[items[0].dataIndex];
                   const sudahText = info.filledRoles.length > 0 ? info.filledRoles.join(", ") : "Belum ada";
                   const belumText = info.missingRoles.length > 0 ? info.missingRoles.join(", ") : "Lengkap semua";
                   return [
@@ -2119,7 +2138,6 @@
         return matchKec && matchQuery;
       });
 
-      // Render grafik kelengkapan 5 instrumen sesuai filter aktif
       renderManageCompletionChart(filtered);
 
       if (filtered.length === 0) {
@@ -2240,12 +2258,12 @@
         const idx = schools.findIndex(s => s.id === id);
         if (idx !== -1) {
           schools[idx] = { ...schools[idx], kecamatan, nama, kepsek, status };
-          showToast(`Data ${nama} (${kepsek}) berhasil diperbarui!`, "success");
+          showToast(`Data ${nama} (${kepsek}) berhasil diperbarui ke Database Vercel!`, "success");
         }
       } else {
         const newId = `SD-${Date.now()}`;
         schools.push({ id: newId, kecamatan, nama, kepsek, status });
-        showToast(`Sekolah baru ${nama} berhasil ditambahkan ke database (0/5 instrumen terisi).`, "success");
+        showToast(`Sekolah baru ${nama} berhasil ditambahkan ke Database Vercel.`, "success");
       }
 
       saveSchoolsToStorage();
@@ -2263,7 +2281,7 @@
         schools = schools.filter(s => s.id !== schoolId);
         evaluations = evaluations.filter(ev => ev.schoolId !== schoolId);
         saveSchoolsToStorage();
-        saveEvalsToStorage();
+        saveEvalsToStorage("REPLACE");
         closeDeleteModal();
         renderManageTable();
         handleKecamatanChange();
@@ -2284,7 +2302,7 @@
       schools = JSON.parse(JSON.stringify(INITIAL_SCHOOLS));
       evaluations = generateInitialEvaluations();
       saveSchoolsToStorage();
-      saveEvalsToStorage();
+      saveEvalsToStorage("REPLACE");
       renderManageTable();
       handleKecamatanChange();
       showToast("Database 38 SD & Kepala Sekolah telah dikembalikan ke data awal.", "success");
@@ -2311,7 +2329,7 @@
       showToast("File CSV Database 38 SD berhasil diunduh.", "success");
     }
 
-    // 5. NAVIGASI TAB, PROTEKSI PIN (99) & NOTIFIKASI TOAST
+    // 5. NAVIGASI TAB & PIN
     function switchTab(tab) {
       if ((tab === "dashboard" || tab === "manage") && !isAdminUnlocked) {
         pendingTargetTab = tab;
@@ -2343,9 +2361,9 @@
       });
 
       if (tab === "dashboard") {
-        handleDashboardKecChange();
+        syncFromServer(false).then(() => handleDashboardKecChange());
       } else if (tab === "manage") {
-        renderManageTable();
+        syncFromServer(false).then(() => renderManageTable());
       }
     }
 
