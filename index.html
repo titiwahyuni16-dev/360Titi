@@ -1,0 +1,2465 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E-PKKS 360° Kabupaten Subang | Kec. Serangpanjang & Sagalaherang</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js untuk Visualisasi Dashboard Eksekutif -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Google Fonts: Plus Jakarta Sans & Merriweather -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+    }
+
+    /* Custom Scrollbar halus */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    /* Tombol Skala Likert 1-5 yang Empuk & Interaktif */
+    .scale-radio:checked + .scale-btn {
+      background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+      color: #ffffff;
+      border-color: #1e3a8a;
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 8px 16px -4px rgba(30, 58, 138, 0.35);
+    }
+    .scale-radio:checked + .scale-btn .scale-sub {
+      color: #93c5fd;
+    }
+
+    /* Kartu Kategori Responden Interaktif */
+    .role-card.active {
+      border-color: #1e3a8a;
+      background-color: #eff6ff;
+      box-shadow: 0 10px 20px -5px rgba(30, 58, 138, 0.15);
+    }
+    .role-card.active .role-check {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Gaya Cetak Resmi A4 (Nota Dinas & Executive Summary) */
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 12mm 14mm;
+      }
+      body {
+        background-color: #ffffff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        font-size: 11px !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .print-container {
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+      .serif-print {
+        font-family: 'Merriweather', 'Times New Roman', serif !important;
+      }
+      .avoid-break {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-blue-900 selection:text-white min-h-screen flex flex-col">
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-5 right-5 z-50 hidden transform transition-all duration-300 translate-y-3 opacity-0 no-print max-w-md">
+    <div id="toast-box" class="flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-2xl border text-sm font-semibold">
+      <span id="toast-icon" class="text-lg shrink-0"></span>
+      <span id="toast-msg" class="leading-snug"></span>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       HEADER UTAMA & NAVIGASI TAB PILL MODERN (STICKY)
+  ====================================================================== -->
+  <header class="bg-gradient-to-r from-[#0f172a] via-[#1e3a8a] to-[#0f172a] text-white shadow-xl sticky top-0 z-40 border-b border-blue-800/60 no-print">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3.5">
+        
+        <!-- Brand & Wilayah Binaan -->
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3.5">
+            <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-500 to-blue-600 p-0.5 shadow-lg shrink-0">
+              <div class="w-full h-full bg-slate-950/90 rounded-[14px] flex items-center justify-center font-extrabold text-base tracking-tighter text-emerald-400">
+                360°
+              </div>
+            </div>
+            <div>
+              <div class="flex flex-wrap items-center gap-2">
+                <h1 class="text-base sm:text-lg font-extrabold tracking-tight text-white">
+                  E-PKKS 360° <span class="text-emerald-400">KABUPATEN SUBANG</span>
+                </h1>
+                <span class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-blue-900/80 text-blue-200 border border-blue-700/70">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  Kec. Serangpanjang & Kec. Sagalaherang • <span id="header-school-count">38</span> SD Binaan
+                </span>
+              </div>
+              <p class="text-xs text-slate-300 mt-0.5">
+                Sistem Penilaian Kinerja Kepala Sekolah Dasar • Pengawas Pembina: <strong class="text-white">Titi Wahyuni, S.Pd</strong>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigasi Tab Pill -->
+        <nav class="flex items-center bg-slate-950/60 backdrop-blur-md p-1.5 rounded-2xl border border-slate-700/70 overflow-x-auto">
+          <button onclick="switchTab('form')" id="tab-btn-form" class="flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap bg-white text-slate-900 shadow-md">
+            <svg class="w-4 h-4 text-blue-700 shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            <span>1. Instrumen Penilaian 360°</span>
+          </button>
+
+          <button onclick="switchTab('dashboard')" id="tab-btn-dashboard" class="flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap text-slate-300 hover:text-white">
+            <svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+            <span>2. Executive Summary-PKKS</span>
+            <span id="lock-icon-dashboard" class="text-xs" title="Terkunci PIN Pengawas">🔒</span>
+          </button>
+
+          <button onclick="switchTab('manage')" id="tab-btn-manage" class="flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap text-slate-300 hover:text-white">
+            <svg class="w-4 h-4 text-amber-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+            <span>3. Kelola Data Sekolah & KS</span>
+            <span id="lock-icon-manage" class="text-xs" title="Terkunci PIN Pengawas">🔒</span>
+          </button>
+
+          <button onclick="lockAdminAccess()" id="btn-relock-admin" class="hidden items-center gap-1.5 ml-1 px-3 py-2 rounded-xl text-xs font-extrabold bg-red-600/90 hover:bg-red-600 text-white shadow transition whitespace-nowrap" title="Kunci kembali menu Executive Summary & Kelola Data">
+            <span>🔒 Kunci Kembali</span>
+          </button>
+        </nav>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- =====================================================================
+       TAB 1: INSTRUMEN PENILAIAN 360° (STEPPER VISUAL 3 LANGKAH)
+  ====================================================================== -->
+  <main id="view-form" class="max-w-5xl w-full mx-auto px-4 sm:px-6 py-8 flex-1 no-print">
+
+    <!-- Stepper Visual 3 Langkah -->
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-5 mb-6">
+      <div class="grid grid-cols-3 gap-2 sm:gap-4">
+        <div id="step-ind-1" class="flex items-center gap-3 p-2.5 rounded-xl bg-blue-50 border border-blue-200 transition-all">
+          <div class="w-8 h-8 rounded-xl bg-blue-900 text-white font-extrabold text-xs flex items-center justify-center shrink-0">1</div>
+          <div class="min-w-0">
+            <div class="text-[11px] font-bold uppercase tracking-wider text-blue-700">Langkah 1</div>
+            <div class="text-xs sm:text-sm font-bold text-slate-900 truncate">Wilayah & Sekolah</div>
+          </div>
+        </div>
+
+        <div id="step-ind-2" class="flex items-center gap-3 p-2.5 rounded-xl bg-slate-50 border border-slate-200 transition-all">
+          <div id="step-num-2" class="w-8 h-8 rounded-xl bg-slate-200 text-slate-600 font-extrabold text-xs flex items-center justify-center shrink-0">2</div>
+          <div class="min-w-0">
+            <div class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Langkah 2</div>
+            <div class="text-xs sm:text-sm font-bold text-slate-700 truncate">Kategori Responden</div>
+          </div>
+        </div>
+
+        <div id="step-ind-3" class="flex items-center gap-3 p-2.5 rounded-xl bg-slate-50 border border-slate-200 transition-all">
+          <div id="step-num-3" class="w-8 h-8 rounded-xl bg-slate-200 text-slate-600 font-extrabold text-xs flex items-center justify-center shrink-0">3</div>
+          <div class="min-w-0">
+            <div class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Langkah 3</div>
+            <div class="text-xs sm:text-sm font-bold text-slate-700 truncate">30 Butir Instrumen</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LANGKAH 1: PILIH WILAYAH KECAMATAN & SEKOLAH DASAR -->
+    <section class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden mb-6">
+      <div class="px-6 py-4 bg-slate-900 text-white flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <span class="w-6 h-6 rounded-lg bg-emerald-500 text-slate-950 font-extrabold text-xs flex items-center justify-center">1</span>
+          <h2 class="text-sm sm:text-base font-bold">Pilih Wilayah Kecamatan & Sekolah Dasar Binaan</h2>
+        </div>
+        <span class="text-xs text-slate-300 hidden sm:inline">Identitas Responden Dijamin Anonim</span>
+      </div>
+
+      <div class="p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <!-- Kecamatan -->
+          <div>
+            <label for="select-kecamatan" class="block text-xs font-extrabold uppercase tracking-wider text-slate-700 mb-2">
+              Wilayah Kecamatan <span class="text-red-500">*</span>
+            </label>
+            <select id="select-kecamatan" onchange="handleKecamatanChange()" class="w-full rounded-xl border border-slate-300 bg-slate-50 hover:bg-white px-4 py-3 text-sm font-semibold text-slate-900 focus:border-blue-700 focus:ring-4 focus:ring-blue-700/10 outline-none transition">
+              <option value="">-- Pilih Kecamatan --</option>
+              <option value="Serangpanjang">Kecamatan Serangpanjang (16 SD)</option>
+              <option value="Sagalaherang">Kecamatan Sagalaherang (22 SD)</option>
+            </select>
+          </div>
+
+          <!-- Nama Sekolah -->
+          <div>
+            <label for="select-sekolah" class="block text-xs font-extrabold uppercase tracking-wider text-slate-700 mb-2">
+              Nama Sekolah Dasar (SD) <span class="text-red-500">*</span>
+            </label>
+            <select id="select-sekolah" onchange="handleSekolahChange()" disabled class="w-full rounded-xl border border-slate-300 bg-slate-50 hover:bg-white px-4 py-3 text-sm font-semibold text-slate-900 disabled:bg-slate-100 disabled:text-slate-400 focus:border-blue-700 focus:ring-4 focus:ring-blue-700/10 outline-none transition">
+              <option value="">-- Pilih Kecamatan Terlebih Dahulu --</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Kartu Info Otomatis Kepala Sekolah Terpilih -->
+        <div id="school-info-banner" class="hidden mt-5 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-blue-50 via-slate-50 to-emerald-50/60 border border-blue-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="flex items-start gap-3.5">
+            <div class="w-11 h-11 rounded-xl bg-blue-900 text-white flex items-center justify-center font-extrabold text-lg shrink-0 shadow-sm">
+              🏫
+            </div>
+            <div>
+              <div class="flex flex-wrap items-center gap-2 mb-1">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-blue-800">Kepala Sekolah yang Dinilai</span>
+                <span id="display-status-badge" class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold uppercase tracking-wide bg-emerald-100 text-emerald-800 border border-emerald-300">
+                  DEFINITIF
+                </span>
+              </div>
+              <div id="display-kepsek-name" class="text-base sm:text-lg font-extrabold text-slate-900">-</div>
+              <div id="display-school-meta" class="text-xs font-medium text-slate-600 mt-0.5">-</div>
+            </div>
+          </div>
+
+          <!-- Input Nama Pengawas Evaluator (Hanya Muncul Jika Peran = Pengawas Sekolah) -->
+          <div id="pengawas-name-box" class="hidden w-full sm:w-80 bg-white p-3.5 rounded-xl border border-blue-200 shadow-sm">
+            <label for="input-nama-pengawas" class="block text-[11px] font-extrabold uppercase tracking-wider text-blue-900 mb-1">
+              Nama Pengawas Evaluator <span class="text-red-500">*</span>
+            </label>
+            <input type="text" id="input-nama-pengawas" value="Titi Wahyuni, S.Pd" class="w-full rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-sm font-bold text-slate-900 focus:border-blue-700 focus:bg-white outline-none" />
+            <div class="text-[11px] text-slate-500 mt-1">NIP. 19820621 200902 2 002</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LANGKAH 2: PILIH KATEGORI RESPONDEN 360° (5 KARTU VISUAL INTERAKTIF) -->
+    <section class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden mb-6">
+      <div class="px-6 py-4 bg-slate-900 text-white flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <span class="w-6 h-6 rounded-lg bg-emerald-500 text-slate-950 font-extrabold text-xs flex items-center justify-center">2</span>
+          <h2 class="text-sm sm:text-base font-bold">Pilih Kategori Responden 360°</h2>
+        </div>
+        <span id="selected-role-pill" class="text-xs font-semibold text-amber-300">Belum dipilih</span>
+      </div>
+
+      <div class="p-6">
+        <input type="hidden" id="select-kategori" value="" />
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5" id="role-cards-grid">
+          
+          <!-- Kartu 1: Pengawas Sekolah -->
+          <button type="button" onclick="selectRoleCard('Pengawas Sekolah')" data-role="Pengawas Sekolah" class="role-card text-left p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-blue-400 transition-all relative flex flex-col justify-between group">
+            <div class="role-check opacity-0 scale-75 transition-all absolute top-3 right-3 w-5 h-5 rounded-full bg-blue-900 text-white flex items-center justify-center text-xs font-bold">✓</div>
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-slate-900 text-amber-400 flex items-center justify-center text-lg mb-3 shadow-sm">📋</div>
+              <div class="font-extrabold text-sm text-slate-900 leading-tight">Pengawas Sekolah</div>
+              <p class="text-[11px] text-slate-500 mt-1.5 leading-relaxed">Verifikasi bukti fisik portofolio, supervisi klinis, & tata kelola.</p>
+            </div>
+            <div class="mt-3 pt-2.5 border-t border-slate-100 text-[10px] font-bold text-blue-800 uppercase tracking-wider">
+              Skala 1–5 (Sangat Kurang – Sangat Baik)
+            </div>
+          </button>
+
+          <!-- Kartu 2: Guru -->
+          <button type="button" onclick="selectRoleCard('Guru')" data-role="Guru" class="role-card text-left p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-blue-400 transition-all relative flex flex-col justify-between group">
+            <div class="role-check opacity-0 scale-75 transition-all absolute top-3 right-3 w-5 h-5 rounded-full bg-blue-900 text-white flex items-center justify-center text-xs font-bold">✓</div>
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-800 flex items-center justify-center text-lg mb-3">👩‍🏫</div>
+              <div class="font-extrabold text-sm text-slate-900 leading-tight">Guru / Pendidik</div>
+              <p class="text-[11px] text-slate-500 mt-1.5 leading-relaxed">Kepemimpinan pembelajaran, Kombel, supervisi, & iklim sekolah.</p>
+            </div>
+            <div class="mt-3 pt-2.5 border-t border-slate-100 text-[10px] font-bold text-blue-800 uppercase tracking-wider">
+              Skala 1–5 (Sangat Tidak Sesuai – Sangat Sesuai)
+            </div>
+          </button>
+
+          <!-- Kartu 3: Tata Usaha -->
+          <button type="button" onclick="selectRoleCard('Tata Usaha')" data-role="Tata Usaha" class="role-card text-left p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-blue-400 transition-all relative flex flex-col justify-between group">
+            <div class="role-check opacity-0 scale-75 transition-all absolute top-3 right-3 w-5 h-5 rounded-full bg-blue-900 text-white flex items-center justify-center text-xs font-bold">✓</div>
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-cyan-100 text-cyan-800 flex items-center justify-center text-lg mb-3">🗂️</div>
+              <div class="font-extrabold text-sm text-slate-900 leading-tight">Tata Usaha / Tendik</div>
+              <p class="text-[11px] text-slate-500 mt-1.5 leading-relaxed">Tata kelola administrasi, kearsipan, sarpras, & transparansi RKAS.</p>
+            </div>
+            <div class="mt-3 pt-2.5 border-t border-slate-100 text-[10px] font-bold text-blue-800 uppercase tracking-wider">
+              Skala 1–5 (Sangat Tidak Sesuai – Sangat Sesuai)
+            </div>
+          </button>
+
+          <!-- Kartu 4: Orang Tua -->
+          <button type="button" onclick="selectRoleCard('Orang Tua')" data-role="Orang Tua" class="role-card text-left p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-blue-400 transition-all relative flex flex-col justify-between group">
+            <div class="role-check opacity-0 scale-75 transition-all absolute top-3 right-3 w-5 h-5 rounded-full bg-blue-900 text-white flex items-center justify-center text-xs font-bold">✓</div>
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center text-lg mb-3">👨‍👩‍👧</div>
+              <div class="font-extrabold text-sm text-slate-900 leading-tight">Orang Tua / Wali</div>
+              <p class="text-[11px] text-slate-500 mt-1.5 leading-relaxed">Keterbukaan informasi, keamanan siswa, komite, & pelayanan publik.</p>
+            </div>
+            <div class="mt-3 pt-2.5 border-t border-slate-100 text-[10px] font-bold text-blue-800 uppercase tracking-wider">
+              Skala 1–5 (Sangat Tidak Sesuai – Sangat Sesuai)
+            </div>
+          </button>
+
+          <!-- Kartu 5: Murid -->
+          <button type="button" onclick="selectRoleCard('Murid')" data-role="Murid" class="role-card text-left p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-blue-400 transition-all relative flex flex-col justify-between group">
+            <div class="role-check opacity-0 scale-75 transition-all absolute top-3 right-3 w-5 h-5 rounded-full bg-blue-900 text-white flex items-center justify-center text-xs font-bold">✓</div>
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center text-lg mb-3">🎒</div>
+              <div class="font-extrabold text-sm text-slate-900 leading-tight">Murid / Siswa</div>
+              <p class="text-[11px] text-slate-500 mt-1.5 leading-relaxed">Keteladanan sikap ramah, sekolah aman anti-bullying, & kenyamanan belajar.</p>
+            </div>
+            <div class="mt-3 pt-2.5 border-t border-slate-100 text-[10px] font-bold text-blue-800 uppercase tracking-wider">
+              Skala 1–5 (Sangat Tidak Setuju – Sangat Setuju)
+            </div>
+          </button>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- LANGKAH 3: PENGISIAN 30 BUTIR INSTRUMEN (5 DIMENSI KOMPETENSI) -->
+    <div id="step3-wrapper" class="hidden">
+      
+      <!-- Sticky Progress Bar & Panduan Skala -->
+      <div class="bg-white/95 backdrop-blur-md rounded-2xl shadow-md border border-slate-200 p-4 sm:p-5 mb-6 sticky top-[76px] z-30">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="w-6 h-6 rounded-lg bg-blue-900 text-white font-extrabold text-xs flex items-center justify-center">3</span>
+              <h3 id="form-role-title" class="text-sm sm:text-base font-extrabold text-slate-900">Instrumen Penilaian</h3>
+            </div>
+            <p id="form-role-desc" class="text-xs text-slate-600 mt-1"></p>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <button type="button" onclick="autoFillDemo()" class="px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 text-xs font-bold transition">
+              ⚡ Isi Otomatis Contoh Skor (Simulasi)
+            </button>
+          </div>
+        </div>
+
+        <!-- Real-Time Progress Bar -->
+        <div class="bg-slate-100 rounded-xl p-3 border border-slate-200">
+          <div class="flex items-center justify-between text-xs font-bold mb-1.5">
+            <span class="text-slate-700">Progres Pengisian Instrumen</span>
+            <span id="progress-text" class="text-blue-900">Terisi 0 dari 30 butir (0%)</span>
+          </div>
+          <div class="w-full h-2.5 bg-slate-200 rounded-full overflow-hidden">
+            <div id="progress-bar-fill" class="h-full bg-gradient-to-r from-blue-700 to-emerald-500 rounded-full transition-all duration-300" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form 30 Pertanyaan -->
+      <form id="pkks-survey-form" onsubmit="handleFormSubmit(event)" class="space-y-6">
+        <div id="questions-container" class="space-y-6">
+          <!-- Dirender dinamis oleh JavaScript -->
+        </div>
+
+        <!-- Panel Submit Bawah -->
+        <div class="bg-slate-900 text-white rounded-2xl shadow-xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div>
+            <div class="text-sm font-extrabold">Selesai Mengisi Seluruh 30 Sub-Indikator?</div>
+            <p class="text-xs text-slate-300 mt-0.5">Skor akan langsung dikalkulasi ke dalam pemetaan 5 Dimensi pada Executive Summary-PKKS.</p>
+          </div>
+          <div class="flex items-center gap-3 w-full sm:w-auto">
+            <button type="button" onclick="autoFillDemo()" class="px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold border border-slate-700 transition">
+              ⚡ Simulasi
+            </button>
+            <button type="submit" class="flex-1 sm:flex-initial px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-sm font-extrabold shadow-lg transition flex items-center justify-center gap-2">
+              <span>Simpan & Kirim Penilaian 360°</span>
+              <span>→</span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Empty State Sebelum Langkah 1 & 2 Lengkap -->
+    <div id="empty-form-state" class="bg-white rounded-2xl border-2 border-dashed border-slate-300 p-10 text-center">
+      <div class="w-14 h-14 rounded-2xl bg-blue-50 text-blue-800 flex items-center justify-center mx-auto mb-3 text-2xl shadow-inner">
+        🧭
+      </div>
+      <h3 class="text-base font-extrabold text-slate-900">Lengkapi Langkah 1 dan Langkah 2</h3>
+      <p class="text-xs sm:text-sm text-slate-500 max-w-lg mx-auto mt-1">
+        Silakan pilih <strong>Kecamatan</strong>, <strong>Sekolah Dasar</strong>, dan klik salah satu dari <strong>5 Kartu Kategori Responden</strong> di atas untuk memunculkan 30 butir instrumen penilaian.
+      </p>
+    </div>
+
+  </main>
+
+  <!-- =====================================================================
+       TAB 2: EXECUTIVE SUMMARY-PKKS (DASHBOARD & NOTA DINAS SIAP CETAK PDF)
+  ====================================================================== -->
+  <section id="view-dashboard" class="hidden max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1">
+
+    <!-- Toolbar Filter & Cetak PDF (Disembunyikan saat Print) -->
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-5 mb-6 flex flex-col lg:flex-row lg:items-center justify-between gap-4 no-print">
+      <div class="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-blue-800"></span>
+          <span class="text-xs font-extrabold uppercase tracking-wider text-slate-600">Filter Laporan:</span>
+        </div>
+
+        <select id="filter-dashboard-kecamatan" onchange="handleDashboardKecChange()" class="rounded-xl border border-slate-300 bg-slate-50 px-3.5 py-2.5 text-xs sm:text-sm font-bold text-slate-800 focus:border-blue-700 outline-none">
+          <option value="ALL">Semua Kecamatan (38 SD)</option>
+          <option value="Serangpanjang">Kec. Serangpanjang (16 SD)</option>
+          <option value="Sagalaherang">Kec. Sagalaherang (22 SD)</option>
+        </select>
+
+        <select id="filter-dashboard-sekolah" onchange="renderDashboard()" class="rounded-xl border border-slate-300 bg-slate-50 px-3.5 py-2.5 text-xs sm:text-sm font-bold text-slate-800 focus:border-blue-700 outline-none max-w-xs sm:max-w-sm">
+          <option value="ALL">Semua Sekolah Binaan (Rekapitulasi)</option>
+        </select>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2.5 justify-end">
+        <button onclick="resetEvaluationsToSeed()" class="px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold transition">
+          ↺ Reset Simulasi Skor
+        </button>
+        <button onclick="window.print()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white text-xs sm:text-sm font-extrabold shadow-md flex items-center gap-2 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+          <span>Cetak / Simpan PDF Executive Brief</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- DOKUMEN LAPORAN EXECUTIVE BRIEF (AREA CETAK A4) -->
+    <div class="bg-white rounded-3xl shadow-md border border-slate-200 p-6 sm:p-10 print-container">
+
+      <!-- KOP RESMI LAPORAN -->
+      <div class="border-b-4 border-slate-900 pb-5 mb-7 flex flex-col lg:flex-row lg:items-start justify-between gap-4 avoid-break">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-blue-950 text-white text-[11px] font-bold uppercase tracking-widest mb-2">
+            <span>Dinas Pendidikan dan Kebudayaan Kabupaten Subang</span>
+            <span>•</span>
+            <span class="text-emerald-400">Model Kompetensi 360° (5 Dimensi)</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight leading-snug serif-print">
+            EXECUTIVE BRIEF: HASIL EVALUASI KOMPETENSI KEPALA SEKOLAH
+          </h2>
+          <p id="exec-subtitle" class="text-xs sm:text-sm font-semibold text-slate-600 mt-1">
+            Wilayah Binaan Kecamatan Serangpanjang & Kecamatan Sagalaherang • Jenjang Sekolah Dasar (SD)
+          </p>
+        </div>
+
+        <div class="bg-slate-50 border border-slate-300 rounded-2xl px-4 py-3 text-xs text-slate-800 shrink-0 space-y-0.5 serif-print">
+          <div><span class="text-slate-500">Dokumen:</span> <strong>Nota Dinas Pengawas Pembina</strong></div>
+          <div><span class="text-slate-500">Tanggal Laporan:</span> <strong>15 November 2026</strong></div>
+          <div><span class="text-slate-500">Sasaran:</span> <strong>Kepala Disdikbud Kab. Subang</strong></div>
+        </div>
+      </div>
+
+      <!-- 4 KARTU KPI UTAMA DENGAN AKSEN GARIS ATAS BERWARNA -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 avoid-break">
+        <!-- KPI 1 -->
+        <div class="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-blue-900 p-4 shadow-sm">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-500">Total Sekolah Binaan</span>
+            <span class="w-7 h-7 rounded-lg bg-blue-50 text-blue-900 flex items-center justify-center text-sm">🏫</span>
+          </div>
+          <div id="kpi-total-sekolah" class="text-2xl font-extrabold text-slate-900">38 SD</div>
+          <div id="kpi-total-sub" class="text-xs font-medium text-slate-500 mt-1">16 Serangpanjang & 22 Sagalaherang</div>
+        </div>
+
+        <!-- KPI 2 -->
+        <div class="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-emerald-600 p-4 shadow-sm">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-500">Rata-Rata Komposit</span>
+            <span class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center text-sm">📈</span>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span id="kpi-rata-rata" class="text-2xl font-extrabold text-emerald-700">4.46</span>
+            <span class="text-xs font-bold text-slate-400">/ 5.00</span>
+          </div>
+          <div class="mt-1.5">
+            <span id="kpi-predikat-badge" class="inline-block px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-emerald-100 text-emerald-800">
+              Level 5 (Ahli)
+            </span>
+          </div>
+        </div>
+
+        <!-- KPI 3 -->
+        <div class="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-indigo-600 p-4 shadow-sm">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-500">Capaian Level 5 (Ahli)</span>
+            <span class="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-700 flex items-center justify-center text-sm">🏆</span>
+          </div>
+          <div id="kpi-ahli-count" class="text-2xl font-extrabold text-indigo-900">34 SD (89.5%)</div>
+          <div id="kpi-ahli-sub" class="text-xs font-medium text-slate-500 mt-1">Skor Komposit ≥ 4.20 (Predikat Ahli)</div>
+        </div>
+
+        <!-- KPI 4 -->
+        <div class="bg-white rounded-2xl border border-slate-200 border-t-4 border-t-amber-600 p-4 shadow-sm">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-500">Area Perhatian Pembinaan</span>
+            <span class="w-7 h-7 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center text-sm">🎯</span>
+          </div>
+          <div id="kpi-perhatian-sekolah" class="text-base font-extrabold text-red-700 truncate">SDN RESTUAGUNG</div>
+          <div id="kpi-perhatian-detail" class="text-xs font-semibold text-slate-600 mt-1">Manajerial: 3.35 (Prioritas Klinis)</div>
+        </div>
+      </div>
+
+      <!-- VISUALISASI GRAFIK INTERAKTIF (GRID 2 KOLOM RESPONSIF) -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8 avoid-break">
+        
+        <!-- Grafik 1: Peringkat Skor Komposit Sekolah Binaan -->
+        <div class="rounded-2xl border border-slate-200 p-5 bg-slate-50/40">
+          <div class="flex items-center justify-between mb-1">
+            <h3 class="text-sm font-extrabold text-slate-900">Peringkat Skor Komposit Kepala Sekolah</h3>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-900">Top 10 & Prioritas</span>
+          </div>
+          <p class="text-[11px] text-slate-500 mb-3">Garis Batas: Level 5 Ahli (≥ 4.20) • Level 4 Mumpuni (≥ 3.40)</p>
+          <div class="h-72 relative">
+            <canvas id="chart-ranking"></canvas>
+          </div>
+        </div>
+
+        <!-- Grafik 2: Radar (Jaring Laba-Laba) 5 Dimensi Kompetensi -->
+        <div class="rounded-2xl border border-slate-200 p-5 bg-slate-50/40">
+          <div class="flex items-center justify-between mb-1">
+            <h3 class="text-sm font-extrabold text-slate-900">Radar Profil 5 Dimensi Kompetensi</h3>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-900">Capaian vs Target 5.00</span>
+          </div>
+          <p class="text-[11px] text-slate-500 mb-3">Kepribadian • Sosial • Profesional • Manajerial • Kewirausahaan</p>
+          <div class="h-72 relative">
+            <canvas id="chart-radar"></canvas>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Grafik 3 (Lebar Penuh): Triangulasi Multi-Rater 360° -->
+      <div class="rounded-2xl border border-slate-200 p-5 bg-slate-50/40 mb-8 avoid-break">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-3">
+          <div>
+            <h3 class="text-sm font-extrabold text-slate-900">Triangulasi Multi-Rater 360° Berdasarkan 5 Kategori Responden</h3>
+            <p class="text-[11px] text-slate-500">Perbandingan objektif persepsi Pengawas Sekolah, Guru, Tata Usaha/Tendik, Orang Tua/Wali, dan Murid</p>
+          </div>
+          <span id="total-responden-badge" class="text-xs font-bold px-3 py-1 rounded-full bg-slate-900 text-white self-start">
+            Total 190 Responden 360°
+          </span>
+        </div>
+        <div class="h-56 relative">
+          <canvas id="chart-rater"></canvas>
+        </div>
+      </div>
+
+      <!-- TABEL REKAPITULASI CAPAIAN KEPALA SEKOLAH BINAAN -->
+      <div class="mb-8">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+          <h3 class="text-sm font-extrabold text-slate-900 uppercase tracking-wider border-l-4 border-blue-900 pl-3">
+            Rekapitulasi Capaian & Rincian 5 Dimensi Kepala Sekolah
+          </h3>
+          <!-- Pencarian Cepat Tabel (Disembunyikan saat Print) -->
+          <div class="relative w-full sm:w-72 no-print">
+            <input type="text" id="dashboard-table-search" oninput="renderDashboard()" placeholder="Cari SD atau nama Kepala Sekolah..." class="w-full rounded-xl border border-slate-300 bg-slate-50 pl-9 pr-3 py-1.5 text-xs font-medium text-slate-800 focus:border-blue-700 focus:bg-white outline-none" />
+            <svg class="w-4 h-4 text-slate-400 absolute left-3 top-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto rounded-2xl border border-slate-200">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="bg-slate-900 text-white">
+                <th class="py-3 px-3 font-bold text-center w-10">No</th>
+                <th class="py-3 px-3 font-bold">Sekolah Dasar & Kecamatan</th>
+                <th class="py-3 px-3 font-bold">Kepala Sekolah & Status</th>
+                <th class="py-3 px-2 font-bold text-center" title="Kepribadian">Keprib.</th>
+                <th class="py-3 px-2 font-bold text-center" title="Sosial">Sosial</th>
+                <th class="py-3 px-2 font-bold text-center" title="Profesional">Prof.</th>
+                <th class="py-3 px-2 font-bold text-center" title="Manajerial">Manaj.</th>
+                <th class="py-3 px-2 font-bold text-center" title="Kewirausahaan">Kewir.</th>
+                <th class="py-3 px-3 font-bold text-center">Skor</th>
+                <th class="py-3 px-3 font-bold">Predikat</th>
+              </tr>
+            </thead>
+            <tbody id="rekap-table-body" class="divide-y divide-slate-200 bg-white">
+              <!-- Diisi dinamis oleh JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- CATATAN KUNCI EVALUASI & REKOMENDASI STRATEGIS KEPALA DINAS -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-10 avoid-break">
+        <!-- Catatan Kunci -->
+        <div class="lg:col-span-5 rounded-2xl border border-slate-200 bg-slate-50 p-5">
+          <h4 class="text-xs font-extrabold uppercase tracking-wider text-slate-900 mb-3 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+            Catatan Kunci Hasil Evaluasi 360°
+          </h4>
+          <div id="key-notes-box" class="space-y-2.5 text-xs text-slate-700 leading-relaxed">
+            <!-- Diisi dinamis -->
+          </div>
+        </div>
+
+        <!-- Rekomendasi Strategis Kadis -->
+        <div class="lg:col-span-7 rounded-2xl border border-blue-200 bg-blue-50/40 overflow-hidden">
+          <div class="bg-blue-950 text-white px-5 py-3 text-xs font-extrabold uppercase tracking-wider">
+            Rekomendasi Strategis Kepala Dinas (Action Plan Pengawas Pembina)
+          </div>
+          <div id="strategic-recommendations" class="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-slate-700 leading-relaxed">
+            <!-- Diisi dinamis -->
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOK TANDA TANGAN PENGESAHAN RESMI (2 KOLOM SEIMBANG) -->
+      <div class="pt-6 border-t-2 border-slate-300 grid grid-cols-1 sm:grid-cols-2 gap-8 text-xs text-slate-900 serif-print avoid-break">
+        <div class="sm:pl-6">
+          <p>Mengetahui / Menyetujui,</p>
+          <p class="font-bold">Kepala Dinas Pendidikan dan Kebudayaan</p>
+          <p class="font-bold">Kabupaten Subang</p>
+          <div class="h-20"></div>
+          <p class="font-bold underline tracking-wide">........................................................................</p>
+          <p class="mt-0.5">NIP. ............................................................</p>
+        </div>
+
+        <div class="sm:pl-16">
+          <p>Subang, 15 November 2026</p>
+          <p>Diajukan Oleh,</p>
+          <p class="font-bold">Pengawas Sekolah Pembina</p>
+          <p class="font-bold">Kec. Serangpanjang & Kec. Sagalaherang</p>
+          <div class="h-20"></div>
+          <p class="font-bold underline text-sm">Titi Wahyuni, S.Pd</p>
+          <p class="mt-0.5 font-semibold">NIP. 19820621 200902 2 002</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       TAB 3: KELOLA DATA SEKOLAH & KEPALA SEKOLAH (CRUD + LOCALSTORAGE)
+  ====================================================================== -->
+  <section id="view-manage" class="hidden max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 no-print">
+
+    <!-- Ringkasan & Toolbar Manajemen Data -->
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-5 border-b border-slate-200">
+        <div>
+          <span class="inline-block px-2.5 py-0.5 rounded-md bg-amber-100 text-amber-900 text-[11px] font-extrabold uppercase tracking-wider mb-1">
+            Database Master Wilayah Binaan
+          </span>
+          <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">Kelola Data Sekolah Dasar & Kepala Sekolah</h2>
+          <p class="text-xs sm:text-sm text-slate-600 mt-0.5">
+            Perubahan data nama sekolah, nama Kepala Sekolah, atau status jabatan (Definitif / Plt) otomatis tersimpan dan langsung diperbarui pada Instrumen 360° & Executive Summary.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2.5 shrink-0">
+          <button onclick="openSchoolModal()" class="px-4 py-2.5 rounded-xl bg-blue-900 hover:bg-blue-800 text-white text-xs sm:text-sm font-extrabold shadow-sm flex items-center gap-1.5 transition">
+            <span>+ Tambah Sekolah Baru</span>
+          </button>
+          <button onclick="exportSchoolsCSV()" class="px-4 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs sm:text-sm font-bold shadow-sm transition">
+            📥 Ekspor CSV
+          </button>
+          <button onclick="resetMasterSchools()" class="px-3.5 py-2.5 rounded-xl border border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-bold transition">
+            ↺ Reset Data Awal (38 SD)
+          </button>
+        </div>
+      </div>
+
+      <!-- Ringkasan Jumlah SD per Kecamatan & Filter Pencarian -->
+      <div class="pt-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div class="flex flex-wrap items-center gap-2.5">
+          <span id="badge-count-all" class="px-3 py-1.5 rounded-xl bg-slate-900 text-white text-xs font-extrabold">
+            Total: 38 SD
+          </span>
+          <span id="badge-count-sp" class="px-3 py-1.5 rounded-xl bg-blue-50 text-blue-900 border border-blue-200 text-xs font-bold">
+            Kec. Serangpanjang: 16 SD
+          </span>
+          <span id="badge-count-sg" class="px-3 py-1.5 rounded-xl bg-emerald-50 text-emerald-900 border border-emerald-200 text-xs font-bold">
+            Kec. Sagalaherang: 22 SD
+          </span>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+          <select id="manage-filter-kec" onchange="renderManageTable()" class="rounded-xl border border-slate-300 bg-slate-50 px-3.5 py-2 text-xs sm:text-sm font-bold text-slate-800 outline-none focus:border-blue-700">
+            <option value="ALL">Semua Kecamatan</option>
+            <option value="Serangpanjang">Kec. Serangpanjang</option>
+            <option value="Sagalaherang">Kec. Sagalaherang</option>
+          </select>
+
+          <div class="relative sm:w-64">
+            <input type="text" id="manage-search" oninput="renderManageTable()" placeholder="Cari sekolah / kepala sekolah..." class="w-full rounded-xl border border-slate-300 bg-slate-50 pl-9 pr-3 py-2 text-xs sm:text-sm font-medium text-slate-800 outline-none focus:border-blue-700 focus:bg-white" />
+            <svg class="w-4 h-4 text-slate-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grafik Monitoring Kelengkapan 5 Instrumen per Sekolah (Menu 3) -->
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-4">
+        <div>
+          <span class="inline-block px-2.5 py-0.5 rounded-md bg-blue-100 text-blue-900 text-[11px] font-extrabold uppercase tracking-wider mb-1">
+            Monitoring Progres Pengisian 360°
+          </span>
+          <h3 class="text-base sm:text-lg font-extrabold text-slate-900">Grafik Kelengkapan 5 Instrumen Responden per Sekolah</h3>
+          <p class="text-xs text-slate-600 mt-0.5">
+            Memantau jumlah kategori instrumen yang sudah terisi (maksimal 5 unsur: Pengawas, Guru, TU, Orang Tua, Murid) vs yang belum terisi.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2 shrink-0">
+          <span id="manage-stat-lengkap" class="px-3 py-1.5 rounded-xl bg-emerald-100 text-emerald-900 border border-emerald-300 text-xs font-extrabold">
+            Lengkap (5/5): 0 SD
+          </span>
+          <span id="manage-stat-sebagian" class="px-3 py-1.5 rounded-xl bg-amber-100 text-amber-900 border border-amber-300 text-xs font-extrabold">
+            Sebagian (1–4): 0 SD
+          </span>
+          <span id="manage-stat-belum" class="px-3 py-1.5 rounded-xl bg-red-100 text-red-900 border border-red-300 text-xs font-extrabold">
+            Belum Mengisi (0/5): 38 SD
+          </span>
+          <button type="button" onclick="clearAllEvaluations()" class="px-3 py-1.5 rounded-xl border border-red-300 bg-red-50 hover:bg-red-100 text-red-800 text-xs font-extrabold transition">
+            🧹 Kosongkan Semua Isian
+          </button>
+        </div>
+      </div>
+
+      <div class="h-80 sm:h-96 relative bg-slate-50/70 rounded-2xl border border-slate-200 p-3">
+        <canvas id="chart-manage-completion"></canvas>
+      </div>
+    </div>
+
+    <!-- Tabel Daftar Sekolah & Kepala Sekolah -->
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse text-xs sm:text-sm">
+          <thead>
+            <tr class="bg-slate-900 text-white">
+              <th class="py-3.5 px-4 font-bold text-center w-14">No</th>
+              <th class="py-3.5 px-4 font-bold">Kecamatan</th>
+              <th class="py-3.5 px-4 font-bold">Nama Sekolah Dasar</th>
+              <th class="py-3.5 px-4 font-bold">Nama Kepala Sekolah</th>
+              <th class="py-3.5 px-4 font-bold text-center">Status KS</th>
+              <th class="py-3.5 px-4 font-bold text-center">Kelengkapan 5 Instrumen</th>
+              <th class="py-3.5 px-4 font-bold text-center w-36">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="manage-table-body" class="divide-y divide-slate-200">
+            <!-- Diisi dinamis oleh JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- MODAL POP-UP TAMBAH / EDIT SEKOLAH & KEPALA SEKOLAH -->
+  <div id="school-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 backdrop-blur-sm p-4 no-print">
+    <div class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-md w-full overflow-hidden transform transition-all">
+      <div class="bg-slate-900 text-white px-6 py-4 flex items-center justify-between">
+        <h3 id="modal-title" class="text-base font-extrabold">Edit Data Sekolah & Kepala Sekolah</h3>
+        <button type="button" onclick="closeSchoolModal()" class="text-slate-400 hover:text-white text-xl font-bold leading-none">&times;</button>
+      </div>
+
+      <form onsubmit="saveSchoolModal(event)" class="p-6 space-y-4">
+        <input type="hidden" id="modal-school-id" value="" />
+
+        <div>
+          <label class="block text-xs font-extrabold uppercase tracking-wider text-slate-700 mb-1.5">
+            Kecamatan <span class="text-red-500">*</span>
+          </label>
+          <select id="modal-kecamatan" required class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3.5 py-2.5 text-sm font-bold text-slate-900 outline-none focus:border-blue-700">
+            <option value="Serangpanjang">Serangpanjang</option>
+            <option value="Sagalaherang">Sagalaherang</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-extrabold uppercase tracking-wider text-slate-700 mb-1.5">
+            Nama Sekolah Dasar <span class="text-red-500">*</span>
+          </label>
+          <input type="text" id="modal-nama-sekolah" required placeholder="Contoh: SDN ARJASARI" class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3.5 py-2.5 text-sm font-bold text-slate-900 outline-none focus:border-blue-700 focus:bg-white" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-extrabold uppercase tracking-wider text-slate-700 mb-1.5">
+            Nama Kepala Sekolah & Gelar <span class="text-red-500">*</span>
+          </label>
+          <input type="text" id="modal-nama-kepsek" required placeholder="Contoh: AGUS AHMAD ZAKARIA, S.Pd" class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3.5 py-2.5 text-sm font-bold text-slate-900 outline-none focus:border-blue-700 focus:bg-white" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-extrabold uppercase tracking-wider text-slate-700 mb-1.5">
+            Status Jabatan Kepala Sekolah
+          </label>
+          <div class="grid grid-cols-2 gap-3">
+            <label class="cursor-pointer">
+              <input type="radio" name="modal_status" value="Definitif" checked class="sr-only peer" />
+              <div class="p-2.5 rounded-xl border-2 border-slate-200 peer-checked:border-emerald-600 peer-checked:bg-emerald-50 text-center text-xs font-extrabold text-slate-700 peer-checked:text-emerald-900 transition">
+                DEFINITIF
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="modal_status" value="Plt" class="sr-only peer" />
+              <div class="p-2.5 rounded-xl border-2 border-slate-200 peer-checked:border-amber-600 peer-checked:bg-amber-50 text-center text-xs font-extrabold text-slate-700 peer-checked:text-amber-900 transition">
+                PLT (Pelaksana Tugas)
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="pt-3 flex items-center justify-end gap-2.5 border-t border-slate-100">
+          <button type="button" onclick="closeSchoolModal()" class="px-4 py-2.5 rounded-xl border border-slate-300 text-slate-700 text-xs font-bold hover:bg-slate-50 transition">
+            Batal
+          </button>
+          <button type="submit" class="px-5 py-2.5 rounded-xl bg-blue-900 hover:bg-blue-800 text-white text-xs sm:text-sm font-extrabold shadow-md transition">
+            Simpan Perubahan
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL KONFIRMASI HAPUS (PENGGANTI confirm()) -->
+  <div id="delete-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 backdrop-blur-sm p-4 no-print">
+    <div class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-sm w-full p-6 text-center">
+      <div class="w-12 h-12 rounded-2xl bg-red-100 text-red-700 flex items-center justify-center mx-auto mb-3 text-xl">
+        🗑️
+      </div>
+      <h3 class="text-base font-extrabold text-slate-900">Hapus Data Sekolah?</h3>
+      <p id="delete-modal-text" class="text-xs text-slate-600 mt-1.5 leading-relaxed">
+        Data sekolah dan riwayat skor terkait akan dihapus dari daftar aktif.
+      </p>
+      <div class="mt-5 flex items-center justify-center gap-3">
+        <button type="button" onclick="closeDeleteModal()" class="flex-1 py-2.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-700 hover:bg-slate-50">
+          Batal
+        </button>
+        <button type="button" id="confirm-delete-btn" class="flex-1 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-extrabold shadow">
+          Ya, Hapus
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL VERIFIKASI PIN PENGAWAS (PIN: 99) -->
+  <div id="pin-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/75 backdrop-blur-sm p-4 no-print">
+    <div class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-sm w-full overflow-hidden transform transition-all">
+      <div class="bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 text-white px-6 py-5 text-center relative">
+        <button type="button" onclick="closePinModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl font-bold leading-none">&times;</button>
+        <div class="w-12 h-12 rounded-2xl bg-amber-400/20 border border-amber-400/40 text-amber-300 flex items-center justify-center mx-auto mb-2.5 text-2xl">
+          🔐
+        </div>
+        <h3 class="text-base font-extrabold tracking-tight">Akses Khusus Pengawas Pembina</h3>
+        <p id="pin-modal-target-desc" class="text-xs text-slate-300 mt-1">
+          Masukkan PIN Pengawas untuk membuka menu laporan & pengelolaan data.
+        </p>
+      </div>
+
+      <form onsubmit="verifyPinSubmit(event)" class="p-6">
+        <div class="mb-4">
+          <label for="input-admin-pin" class="block text-center text-[11px] font-extrabold uppercase tracking-wider text-slate-600 mb-2">
+            Masukkan PIN Akses (2 Digit)
+          </label>
+          <input type="password" id="input-admin-pin" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="••" class="w-full text-center tracking-[0.6em] text-2xl font-extrabold rounded-2xl border-2 border-slate-300 bg-slate-50 py-3 text-slate-900 focus:border-blue-800 focus:bg-white focus:ring-4 focus:ring-blue-800/10 outline-none transition" />
+          <p id="pin-error-msg" class="hidden text-center text-xs font-bold text-red-600 mt-2">
+            ❌ PIN salah! Akses ditolak.
+          </p>
+        </div>
+
+        <!-- Keypad Angka Cepat untuk Layar Sentuh / HP -->
+        <div class="grid grid-cols-3 gap-2 mb-5">
+          <button type="button" onclick="appendPinDigit('1')" class="py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 active:bg-blue-100 text-slate-900 font-extrabold text-sm transition">1</button>
+          <button type="button" onclick="appendPinDigit('2')" class="py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 active:bg-blue-100 text-slate-900 font-extrabold text-sm transition">2</button>
+          <button type="button" onclick="appendPinDigit('3')" class="py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 active:bg-blue-100 text-slate-900 font-extrabold text-sm transition">3</button>
+          <button type="button" onclick="appendPinDigit('4')" class="py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 active:bg-blue-100 text-slate-900 font-extrabold text-sm transition">4</button>
+          <button type="button" onclick="appendPinDigit('5')" class="py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 active:bg-blue-100 text-slate-900 font-extrabold text-sm transition">5</button>
+          <button type="button" onclick="appendPinDigit('6')" class="py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 active:bg-blue-100 text-slate-900 font-extrabold text-sm transition">6</button>
+          <button type="button" onclick="appendPinDigit('7')" class="py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 active:bg-blue-100 text-slate-900 font-extrabold text-sm transition">7</button>
+          <button type="button" onclick="appendPinDigit('8')" class="py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 active:bg-blue-100 text-slate-900 font-extrabold text-sm transition">8</button>
+          <button type="button" onclick="appendPinDigit('9')" class="py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 active:bg-blue-100 text-slate-900 font-extrabold text-sm transition">9</button>
+          <button type="button" onclick="clearPinInput()" class="py-2.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-700 font-extrabold text-xs transition">Hapus</button>
+          <button type="button" onclick="appendPinDigit('0')" class="py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 active:bg-blue-100 text-slate-900 font-extrabold text-sm transition">0</button>
+          <button type="submit" class="py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs transition">Masuk ✓</button>
+        </div>
+
+        <div class="flex items-center gap-2.5">
+          <button type="button" onclick="closePinModal()" class="flex-1 py-2.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-700 hover:bg-slate-50 transition">
+            Batal
+          </button>
+          <button type="submit" class="flex-1 py-2.5 rounded-xl bg-blue-900 hover:bg-blue-800 text-white text-xs font-extrabold shadow transition">
+            Buka Akses
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- FOOTER APLIKASI -->
+  <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500 no-print">
+    E-PKKS 360° Dinas Pendidikan dan Kebudayaan Kabupaten Subang • Wilayah Binaan Kec. Serangpanjang & Kec. Sagalaherang • Pengawas Pembina: <strong class="text-slate-700">Titi Wahyuni, S.Pd</strong>
+  </footer>
+
+  <!-- =====================================================================
+       LOGIKA JAVASCRIPT LENGKAP
+  ====================================================================== -->
+  <script>
+    const STORAGE_KEY_SCHOOLS = "epkks_subang_schools_v3";
+    const STORAGE_KEY_EVALS = "epkks_subang_evals_v3";
+
+    // DATABASE PRESISI 38 SEKOLAH DASAR (16 SERANGPANJANG + 22 SAGALAHERANG)
+    const INITIAL_SCHOOLS = [
+      // KECAMATAN SERANGPANJANG (16 SD)
+      { id: "SP-01", kecamatan: "Serangpanjang", nama: "SDN ARJASARI", kepsek: "AGUS AHMAD ZAKARIA, S.Pd", status: "Plt" },
+      { id: "SP-02", kecamatan: "Serangpanjang", nama: "SDN CINTAMEKAR", kepsek: "YATI NURHAYATI, S.Pd, MM", status: "Plt" },
+      { id: "SP-03", kecamatan: "Serangpanjang", nama: "SDN CIPANCAR", kepsek: "CUCU CAHYATI, S.Pd", status: "Plt" },
+      { id: "SP-04", kecamatan: "Serangpanjang", nama: "SDN CIKUJANG", kepsek: "AGUS ZAKARIA, S.Pd", status: "Definitif" },
+      { id: "SP-05", kecamatan: "Serangpanjang", nama: "SDN CINTAWANA", kepsek: "JUARSIH, S.Pd", status: "Definitif" },
+      { id: "SP-06", kecamatan: "Serangpanjang", nama: "SDN CIJENGKOL", kepsek: "ENEN HERAWATI, S.Pd, MMPd", status: "Definitif" },
+      { id: "SP-07", kecamatan: "Serangpanjang", nama: "SDN MEGAMENDUNG", kepsek: "AGUS ROHENDI, S.Pd", status: "Plt" },
+      { id: "SP-08", kecamatan: "Serangpanjang", nama: "SDN MEKARLAKSANA", kepsek: "AGUS ROHENDI, S.Pd", status: "Definitif" },
+      { id: "SP-09", kecamatan: "Serangpanjang", nama: "SDN PASIRLUHUR", kepsek: "JAENUDIN, S.Pd", status: "Definitif" },
+      { id: "SP-10", kecamatan: "Serangpanjang", nama: "SDN KUJANGSARI", kepsek: "YATI NURHAYATI, S.Pd, MM", status: "Definitif" },
+      { id: "SP-11", kecamatan: "Serangpanjang", nama: "SDN SILIHWANGI", kepsek: "NANA SUPRIATNA, S.Pd", status: "Definitif" },
+      { id: "SP-12", kecamatan: "Serangpanjang", nama: "SDN TALAGASARI", kepsek: "JAENUDIN, S.Pd", status: "Plt" },
+      { id: "SP-13", kecamatan: "Serangpanjang", nama: "SDN TAMAN HARAPAN", kepsek: "YAYAT RUHIYAT, S.Pd", status: "Definitif" },
+      { id: "SP-14", kecamatan: "Serangpanjang", nama: "SDN SARANGSARI", kepsek: "ADE RAHMAT, S.Pd", status: "Definitif" },
+      { id: "SP-15", kecamatan: "Serangpanjang", nama: "SDN TUNAS KARYA", kepsek: "CUCU CAHYATI, S.Pd", status: "Definitif" },
+      { id: "SP-16", kecamatan: "Serangpanjang", nama: "SDN PONGGANG", kepsek: "YAYAT RUHIYAT, S.Pd", status: "Plt" },
+
+      // KECAMATAN SAGALAHERANG (22 SD)
+      { id: "SG-01", kecamatan: "Sagalaherang", nama: "SDN SAGALAHERANG IV", kepsek: "NITA ROSYANA, S.Pd.,MM.Pd", status: "Definitif" },
+      { id: "SG-02", kecamatan: "Sagalaherang", nama: "SDN SUKAMANDI II", kepsek: "RAHAYU, S. Pd.", status: "Definitif" },
+      { id: "SG-03", kecamatan: "Sagalaherang", nama: "SDN EKANUGRAHA", kepsek: "DEDE HAYATI,S.Pd", status: "Definitif" },
+      { id: "SG-04", kecamatan: "Sagalaherang", nama: "SDN SAGALAHHERANG III", kepsek: "ODING MARJUKI, S.Pd", status: "Definitif" },
+      { id: "SG-05", kecamatan: "Sagalaherang", nama: "SDN TUNAS HARAPAN", kepsek: "CUCU ISAK SAPUTRA, S.Pd", status: "Definitif" },
+      { id: "SG-06", kecamatan: "Sagalaherang", nama: "SDN DAYEUHKOLOT I", kepsek: "DINAR RAHAYU, S.Pd", status: "Definitif" },
+      { id: "SG-07", kecamatan: "Sagalaherang", nama: "SDN LELES I", kepsek: "ADE HERLAENI, S.Pd", status: "Definitif" },
+      { id: "SG-08", kecamatan: "Sagalaherang", nama: "SDN TUNAS MULYA", kepsek: "EMA NARUMANAH, S.Pd", status: "Definitif" },
+      { id: "SG-09", kecamatan: "Sagalaherang", nama: "SDN LELES III", kepsek: "TIA SETIAPRAJA, S.Pd", status: "Definitif" },
+      { id: "SG-10", kecamatan: "Sagalaherang", nama: "SDN SAGALAHERANG II", kepsek: "SRI KURNIA ROSMAYATI, S.Pd", status: "Definitif" },
+      { id: "SG-11", kecamatan: "Sagalaherang", nama: "SDN SAGALAHERANG V", kepsek: "IDA HARTINI, S.Pd", status: "Definitif" },
+      { id: "SG-12", kecamatan: "Sagalaherang", nama: "SDN SAGALAHERANG VI", kepsek: "CUCU ALFIAH, S.Pd, M.MPd", status: "Definitif" },
+      { id: "SG-13", kecamatan: "Sagalaherang", nama: "SDN PANARUBAN", kepsek: "IKA DEWI SARTIKA, S.Pd", status: "Definitif" },
+      { id: "SG-14", kecamatan: "Sagalaherang", nama: "SDN GIRIWANGI", kepsek: "ERI NURAENI, S.Pd", status: "Definitif" },
+      { id: "SG-15", kecamatan: "Sagalaherang", nama: "SDN TENGGERAGUNG", kepsek: "DADAN MUHAMAD ARIFIN, S.Pd", status: "Definitif" },
+      { id: "SG-16", kecamatan: "Sagalaherang", nama: "SDN CURUGAGUNG", kepsek: "SUPRIATNA, S.Pd", status: "Definitif" },
+      { id: "SG-17", kecamatan: "Sagalaherang", nama: "SDN SANGKURIANG", kepsek: "ENDANG HIDAYAT, S.Pd", status: "Definitif" },
+      { id: "SG-18", kecamatan: "Sagalaherang", nama: "SDN SUKAMANDI I", kepsek: "MUMUH, S.Pd", status: "Definitif" },
+      { id: "SG-19", kecamatan: "Sagalaherang", nama: "SDN RESTUAGUNG", kepsek: "UJANG DEDEN J, S.Pd SD", status: "Definitif" },
+      { id: "SG-20", kecamatan: "Sagalaherang", nama: "SDN DAYEUHKOLOT II", kepsek: "ROHMAT HIDAYAT, S.Pd", status: "Definitif" },
+      { id: "SG-21", kecamatan: "Sagalaherang", nama: "SDN SAGALAHERANG I", kepsek: "AYAT HIDAYAT, S.Pd", status: "Definitif" },
+      { id: "SG-22", kecamatan: "Sagalaherang", nama: "SDN CICADAS", kepsek: "IKA DEWI SARTIKA, S.Pd", status: "Plt" }
+    ];
+
+    // PEMETAAN 5 DIMENSI KOMPETENSI SESUAI INSTRUKSI:
+    // 1. Kepribadian [No 1-6]
+    // 2. Sosial [No 7-16]
+    // 3. Profesional [No 17-20]
+    // 4. Manajerial [No 21-27]
+    // 5. Kewirausahaan [No 28-30]
+    const DIMENSIONS_MAP = [
+      { key: "Kepribadian", label: "1. Kepribadian", short: "Kepribadian", range: [1, 6], badge: "bg-indigo-100 text-indigo-900 border-indigo-200", headerBg: "from-indigo-950 to-blue-900" },
+      { key: "Sosial", label: "2. Sosial", short: "Sosial", range: [7, 16], badge: "bg-emerald-100 text-emerald-900 border-emerald-200", headerBg: "from-emerald-900 to-teal-800" },
+      { key: "Profesional", label: "3. Profesional", short: "Profesional", range: [17, 20], badge: "bg-blue-100 text-blue-900 border-blue-200", headerBg: "from-blue-900 to-sky-800" },
+      { key: "Manajerial", label: "4. Manajerial", short: "Manajerial", range: [21, 27], badge: "bg-amber-100 text-amber-900 border-amber-200", headerBg: "from-slate-900 to-slate-800" },
+      { key: "Kewirausahaan", label: "5. Kewirausahaan", short: "Kewirausahaan", range: [28, 30], badge: "bg-purple-100 text-purple-900 border-purple-200", headerBg: "from-purple-950 to-indigo-900" }
+    ];
+
+    // BANK 30 BUTIR INSTRUMEN LENGKAP UNTUK 5 PERAN RESPONDEN
+    const INSTRUMENTS_DB = {
+      "Pengawas Sekolah": {
+        title: "Instrumen PKKS 2026 — Responden Pengawas Sekolah",
+        desc: "Lakukan verifikasi bukti fisik dokumen/portofolio dan pengamatan klinis pada setiap sub-indikator Kepala Sekolah.",
+        scaleShort: ["Sangat Kurang", "Kurang", "Cukup", "Baik", "Sangat Baik"],
+        questions: [
+          { no: 1, text: "Sejauh mana Kepala Sekolah menunjukkan keteladanan moral, etika, dan nilai agama dalam setiap kebijakan?", bukti: "Jurnal Refleksi, Risalah Rapat" },
+          { no: 2, text: "Sejauh mana Kepala Sekolah mengendalikan emosi, bersikap tenang, dan bijaksana saat menghadapi konflik?", bukti: "Catatan Pengelolaan Konflik/Komplain" },
+          { no: 3, text: "Sejauh mana Kepala Sekolah konsisten menerapkan kode etik jabatan dan norma integritas kedinasan?", bukti: "Rekam Jejak Disiplin Kedinasan" },
+          { no: 4, text: "Sejauh mana Kepala Sekolah melakukan evaluasi diri dan menyusun rencana pengembangan diri berorientasi siswa?", bukti: "Laporan EDS / Rencana PKB" },
+          { no: 5, text: "Sejauh mana Kepala Sekolah terbuka terhadap saran dan adaptif mempelajari praktik kepemimpinan baru?", bukti: "Sertifikat Diklat/Pelatihan" },
+          { no: 6, text: "Sejauh mana Kepala Sekolah mengimplementasikan hasil diklat ke dalam aksi nyata perbaikan pembelajaran?", bukti: "Laporan Action Plan / Inovasi" },
+          { no: 7, text: "Sejauh mana Kepala Sekolah mempertimbangkan kondisi psikologis dan kebutuhan khusus siswa dalam kebijakan?", bukti: "Dokumen Kebijakan Ramah Anak" },
+          { no: 8, text: "Sejauh mana Kepala Sekolah menjamin hak-hak peserta didik untuk mendapat layanan adil tanpa diskriminasi?", bukti: "Tata Tertib & Layanan Bantuan" },
+          { no: 9, text: "Sejauh mana Kepala Sekolah memastikan sistem dan lingkungan sekolah aman dari perundungan (bullying)?", bukti: "SK TPPK & SOP Keselamatan" },
+          { no: 10, text: "Sejauh mana Kepala Sekolah memberdayakan potensi guru dan tendik secara optimal melalui pembagian peran?", bukti: "SK Pembagian Tugas & Apresiasi" },
+          { no: 11, text: "Sejauh mana Kepala Sekolah melibatkan orang tua/wali murid secara aktif dalam mendukung program sekolah?", bukti: "Laporan Komite & Forum Dialog" },
+          { no: 12, text: "Sejauh mana Kepala Sekolah membangun komunikasi dua arah yang efektif dan terbuka dengan warga sekolah?", bukti: "Notulen Rapat & Kanal Informasi" },
+          { no: 13, text: "Sejauh mana Kepala Sekolah mengorganisasikan kerja sama tim dan kolaborasi antarguru/staf secara harmonis?", bukti: "Struktur Organisasi & Tim Kerja" },
+          { no: 14, text: "Sejauh mana Kepala Sekolah menunjukkan inisiatif dalam menggerakkan warga sekolah mengatasi kendala?", bukti: "Laporan Problem Solving & Gotong Royong" },
+          { no: 15, text: "Sejauh mana Kepala Sekolah aktif berpartisipasi dalam KKKS dan jejaring pendidikan daerah?", bukti: "Surat Tugas KKKS & Forum" },
+          { no: 16, text: "Sejauh mana Kepala Sekolah membagikan praktik baik (best practices) kepemimpinannya kepada rekan sejawat?", bukti: "Berita Acara Peer Mentoring" },
+          { no: 17, text: "Sejauh mana Kepala Sekolah memimpin perumusan dan perwujudan visi-misi sekolah yang berpusat pada murid?", bukti: "Dokumen KOSP / Kurikulum" },
+          { no: 18, text: "Sejauh mana Kepala Sekolah membudayakan kebiasaan belajar dan refleksi secara berkelanjutan bagi guru?", bukti: "Jadwal Diskusi & Literasi Guru" },
+          { no: 19, text: "Sejauh mana Kepala Sekolah mengelola Komunitas Belajar (Kombel) berdasarkan analisis Rapor Pendidikan?", bukti: "SK Kombel & Laporan Refleksi" },
+          { no: 20, text: "Sejauh mana Kepala Sekolah memastikan lingkungan fisik/psikologis sekolah kondusif, bersih, dan inklusif?", bukti: "Foto Fasilitas Inklusi & Kebersihan" },
+          { no: 21, text: "Sejauh mana Kepala Sekolah memimpin, memantau, dan memfasilitasi perencanaan serta supervisi akademik?", bukti: "Program & Laporan Supervisi Akademik" },
+          { no: 22, text: "Sejauh mana Kepala Sekolah mengidentifikasi dan menggalang potensi sumber daya untuk pengembangan sekolah?", bukti: "Pemetaan 7 Aset & Daftar Mitra" },
+          { no: 23, text: "Sejauh mana Kepala Sekolah mengalokasikan sarpras dan anggaran sekolah secara tepat sasaran demi mutu belajar?", bukti: "Kesesuaian Alat Peraga & Sarpras" },
+          { no: 24, text: "Sejauh mana Kepala Sekolah mengelola keuangan dan aset sekolah secara transparan, akuntabel, dan sesuai aturan?", bukti: "Laporan RKAS/BOS & KIB Aset" },
+          { no: 25, text: "Sejauh mana Kepala Sekolah menyusun RKS dan RKAS secara partisipatif berbasis Perencanaan Berbasis Data (PBD)?", bukti: "Dokumen RKS/RKAS & Berita Acara PBD" },
+          { no: 26, text: "Sejauh mana Kepala Sekolah menata struktur organisasi, pembagian tugas, dan kerapian kearsipan sekolah?", bukti: "Arsip TU & Job Description" },
+          { no: 27, text: "Sejauh mana Kepala Sekolah melaksanakan monitoring dan evaluasi (Monev) program serta tindak lanjut perbaikan?", bukti: "Laporan Monev Berkala" },
+          { no: 28, text: "Sejauh mana Kepala Sekolah melahirkan gagasan kreatif/inovasi program dalam mengatasi keterbatasan sarana?", bukti: "Portofolio Inovasi Unggulan" },
+          { no: 29, text: "Sejauh mana Kepala Sekolah menunjukkan etos kerja tinggi, gigih, dan pantang menyerah dalam memajukan sekolah?", bukti: "Presensi & Rekam Jejak Perubahan" },
+          { no: 30, text: "Sejauh mana Kepala Sekolah berhasil membangun kerja sama dengan pihak luar yang memberi nilai tambah sekolah?", bukti: "MOU Kemitraan Subang" }
+        ]
+      },
+      "Guru": {
+        title: "Instrumen PKKS 2026 — Responden Guru / Pendidik",
+        desc: "Berikan penilaian Ibu/Bapak pada indikator kompetensi Kepala Sekolah secara objektif. Identitas dijamin anonim.",
+        scaleShort: ["Sangat Tidak Sesuai", "Kurang Sesuai", "Cukup Sesuai", "Sesuai", "Sangat Sesuai"],
+        questions: [
+          { no: 1, text: "Kepala Sekolah menunjukkan keteladanan moral, etika, dan nilai-nilai keagamaan dalam memimpin sekolah." },
+          { no: 2, text: "Kepala Sekolah mampu mengelola emosi dengan tenang, sabar, dan bijaksana saat menghadapi tekanan atau konflik sekolah." },
+          { no: 3, text: "Kepala Sekolah konsisten menerapkan kode etik kedinasan dan norma kepemimpinan dalam menjalankan tugas harian." },
+          { no: 4, text: "Kepala Sekolah melakukan refleksi diri dan merencanakan pengembangan kompetensinya yang berorientasi pada kemajuan siswa." },
+          { no: 5, text: "Kepala Sekolah bersikap adaptif, terbuka, dan aktif mempelajari praktik kepemimpinan baru untuk kemajuan sekolah." },
+          { no: 6, text: "Kepala Sekolah menerapkan hasil pelatihan/pengembangan dirinya secara berkelanjutan dalam meningkatkan mutu sekolah." },
+          { no: 7, text: "Kepala Sekolah menunjukkan empati dan mempertimbangkan kondisi psikologis serta kebutuhan warga sekolah dalam membuat keputusan." },
+          { no: 8, text: "Kepala Sekolah menghormati dan memenuhi hak-hak peserta didik serta guru secara adil dan tanpa diskriminasi." },
+          { no: 9, text: "Kepala Sekolah peduli dan memastikan terwujudnya lingkungan sekolah yang aman, selamat, dan bebas dari perundungan (anti-bullying)." },
+          { no: 10, text: "Kepala Sekolah memberdayakan potensi guru dan tenaga kependidikan secara optimal untuk meningkatkan kualitas pembelajaran." },
+          { no: 11, text: "Kepala Sekolah memfasilitasi dan mengarahkan peran aktif orang tua/wali murid dalam mendukung proses belajar siswa." },
+          { no: 12, text: "Kepala Sekolah membangun komunikasi dua arah yang efektif, terbuka, dan komunikatif dengan seluruh guru dan staf." },
+          { no: 13, text: "Kepala Sekolah mengorganisasikan pembagian tugas dan kolaborasi tim kerja guru/staf secara adil dan terstruktur." },
+          { no: 14, text: "Kepala Sekolah menunjukkan inisiatif tinggi dan berpartisipasi aktif dalam memimpin warga sekolah mencapai target bersama." },
+          { no: 15, text: "Kepala Sekolah aktif berpartisipasi dalam kegiatan organisasi profesi (KKKS) dan jejaring pendidikan daerah." },
+          { no: 16, text: "Kepala Sekolah aktif membagikan praktik baik (best practices) dan karya kepemimpinannya kepada guru dan rekan sejawat." },
+          { no: 17, text: "Kepala Sekolah memimpin perwujudan visi dan misi sekolah yang berpusat pada kepentingan terbaik pembelajaran murid." },
+          { no: 18, text: "Kepala Sekolah membudayakan kebiasaan belajar dan refleksi secara berkelanjutan bagi seluruh guru di sekolah." },
+          { no: 19, text: "Kepala Sekolah memfasilitasi dan mengelola Komunitas Belajar (Kombel) guru berdasarkan analisis data Rapor Pendidikan." },
+          { no: 20, text: "Kepala Sekolah menciptakan iklim lingkungan sekolah yang aman, nyaman, ramah anak, dan inklusif." },
+          { no: 21, text: "Kepala Sekolah melaksanakan supervisi akademik, memberikan bimbingan perencanaan, dan memantau asesmen pembelajaran guru." },
+          { no: 22, text: "Kepala Sekolah mengidentifikasi dan menelusuri berbagai potensi sumber daya untuk mendukung pembelajaran siswa." },
+          { no: 23, text: "Kepala Sekolah mengelola dan memanfaatkan sarana prasarana sekolah secara efektif untuk peningkatan mutu belajar." },
+          { no: 24, text: "Kepala Sekolah mengelola sumber daya dan anggaran sekolah secara transparan, akuntabel, dan sesuai aturan." },
+          { no: 25, text: "Kepala Sekolah melibatkan guru dan staf dalam menyusun Rencana Kerja Sekolah (RKS/RKAS) secara partisipatif." },
+          { no: 26, text: "Kepala Sekolah menata struktur pembagian tugas dan pengorganisasian administrasi sekolah secara jelas dan teratur." },
+          { no: 27, text: "Kepala Sekolah melakukan pemantauan, evaluasi berkala, dan tindak lanjut perbaikan terhadap pelaksanaan program kerja." },
+          { no: 28, text: "Kepala Sekolah melahirkan gagasan kreatif dan inovatif dalam memecahkan masalah pembelajaran di sekolah." },
+          { no: 29, text: "Kepala Sekolah menunjukkan etos kerja yang tinggi, gigih, dan pantang menyerah dalam memajukan sekolah." },
+          { no: 30, text: "Kepala Sekolah menggalang kemitraan produktif dengan berbagai pihak luar untuk memberikan nilai tambah bagi sekolah." }
+        ]
+      },
+      "Tata Usaha": {
+        title: "Instrumen PKKS 2026 — Responden Tata Usaha & Tendik",
+        desc: "Berikan penilaian Ibu/Bapak yang menggambarkan pelayanan, tata kelola administrasi, dan kepemimpinan Kepala Sekolah.",
+        scaleShort: ["Sangat Tidak Sesuai", "Kurang Sesuai", "Cukup Sesuai", "Sesuai", "Sangat Sesuai"],
+        questions: [
+          { no: 1, text: "Kepala Sekolah menunjukkan keteladanan moral, etika, dan nilai-nilai keagamaan dalam memimpin dan mengelola sekolah sehari-hari." },
+          { no: 2, text: "Kepala Sekolah mampu mengelola emosi dengan tenang, bersikap sabar, dan bijaksana dalam berinteraksi dengan staf TU/Tendik." },
+          { no: 3, text: "Kepala Sekolah konsisten menerapkan kode etik kedinasan, kejujuran, dan norma kepemimpinan dalam lingkungan kerja." },
+          { no: 4, text: "Kepala Sekolah melakukan evaluasi diri dan mendukung perencanaan pengembangan kapasitas staf TU/Tendik secara berkala." },
+          { no: 5, text: "Kepala Sekolah bersikap adaptif, terbuka terhadap teknologi digital administrasi, dan mendukung pembaruan tata kelola sekolah." },
+          { no: 6, text: "Kepala Sekolah menerapkan hasil pelatihan/diklat yang diikutinya secara nyata untuk perbaikan layanan administrasi sekolah." },
+          { no: 7, text: "Kepala Sekolah menunjukkan kepedulian dan mempertimbangkan kondisi operasional serta kebutuhan staf dalam setiap keputusan." },
+          { no: 8, text: "Kepala Sekolah menghormati dan memenuhi hak-hak staf Tendik/TU secara adil, transparan, dan tanpa diskriminasi." },
+          { no: 9, text: "Kepala Sekolah peduli dan memastikan lingkungan kerja serta fasilitas sekolah aman, tertib, dan kondusif." },
+          { no: 10, text: "Kepala Sekolah memberdayakan staf TU/Tendik sesuai dengan potensi kompetensinya dan memberikan dukungan fasilitas kerja." },
+          { no: 11, text: "Kepala Sekolah memfasilitasi hubungan komunikasi yang harmonis antara bagian administrasi sekolah dengan orang tua/wali murid." },
+          { no: 12, text: "Kepala Sekolah membangun komunikasi yang santun, jelas, dan terbuka dengan seluruh staf Tata Usaha dan Tendik." },
+          { no: 13, text: "Kepala Sekolah memberikan kejelasan pembagian tugas (job description), alur kerja, dan pembentukan tim kerja yang terstruktur." },
+          { no: 14, text: "Kepala Sekolah menunjukkan inisiatif dan siap turun tangan membantu staf dalam mengatasi kendala operasional sekolah." },
+          { no: 15, text: "Kepala Sekolah aktif dalam jejaring kedinasan dan menggalang hubungan luar yang bermanfaat bagi kelancaran sekolah." },
+          { no: 16, text: "Kepala Sekolah memberikan apresiasi terhadap kinerja staf dan membagikan praktik baik pengelolaan administrasi sekolah." },
+          { no: 17, text: "Kepala Sekolah mengarahkan seluruh dukungan layanan administrasi TU untuk mewujudkan visi sekolah yang berfokus pada murid." },
+          { no: 18, text: "Kepala Sekolah membudayakan kebiasaan kerja yang tertib, disiplin, efisien, dan berorientasi pada mutu layanan." },
+          { no: 19, text: "Kepala Sekolah memanfaatkan data administrasi, pendataan kepegawaian, dan Rapor Pendidikan dalam pengambilan keputusan." },
+          { no: 20, text: "Kepala Sekolah memastikan sarana fisik, kebersihan lingkungan, dan fasilitas kerja kantor TU terawat dengan baik." },
+          { no: 21, text: "Kepala Sekolah mengoordinasikan kelancaran dukungan administrasi untuk kegiatan pembelajaran dan pemenuhan laporan sekolah." },
+          { no: 22, text: "Kepala Sekolah aktif mengupayakan pemenuhan kelengkapan sarana prasarana dan perlengkapan kerja administrasi TU." },
+          { no: 23, text: "Kepala Sekolah mengalokasikan penggunaan anggaran dan fasilitas sekolah secara efektif sesuai kebutuhan prioritas." },
+          { no: 24, text: "Kepala Sekolah mengelola keuangan sekolah (RKAS/BOS) dan inventaris barang secara transparan, rapi, dan akuntabel." },
+          { no: 25, text: "Kepala Sekolah melibatkan staf TU/Tendik dalam penyusunan Rencana Kerja Sekolah (RKS) dan RKAS secara transparan." },
+          { no: 26, text: "Kepala Sekolah menata sistem kearsipan, persuratan, dan kerapian dokumen kepegawaian/kesiswaan secara teratur." },
+          { no: 27, text: "Kepala Sekolah melakukan pemantauan rutin terhadap ketercapaian tugas administrasi serta memberikan arahan perbaikan." },
+          { no: 28, text: "Kepala Sekolah melahirkan gagasan inovatif dalam efisiensi tata kelola administrasi dan pelayanan sekolah." },
+          { no: 29, text: "Kepala Sekolah menunjukkan etos kerja tinggi, kedisiplinan, dan sikap responsif dalam memimpin operasional harian." },
+          { no: 30, text: "Kepala Sekolah berhasil membangun kerja sama produktif dengan mitra luar yang memberikan nilai tambah sarana/layanan sekolah." }
+        ]
+      },
+      "Orang Tua": {
+        title: "Instrumen PKKS 2026 — Responden Orang Tua / Wali Murid",
+        desc: "Isilah pertanyaan di bawah ini secara jujur berdasarkan pengalaman Bapak/Ibu berinteraksi dengan Kepala Sekolah dan pihak sekolah.",
+        scaleShort: ["Sangat Tidak Sesuai", "Kurang Sesuai", "Cukup Sesuai", "Sesuai", "Sangat Sesuai"],
+        questions: [
+          { no: 1, text: "Kepala Sekolah menunjukkan keteladanan akhlak, etika, dan nilai keagamaan dalam memimpin serta mengelola kegiatan sekolah." },
+          { no: 2, text: "Kepala Sekolah bersikap tenang, sabar, dan santun saat menghadapi komplain, masukan, atau permasalahan orang tua siswa." },
+          { no: 3, text: "Kepala Sekolah menerapkan sikap adil dan tidak membeda-bedakan latar belakang sosial-ekonomi peserta didik maupun orang tua." },
+          { no: 4, text: "Kepala Sekolah terbuka menerima saran dan masukan dari orang tua murid demi perbaikan mutu dan layanan sekolah." },
+          { no: 5, text: "Kepala Sekolah memanfaatkan sarana komunikasi digital (seperti grup WhatsApp/situs sekolah) secara aktif untuk kemudahan informasi orang tua." },
+          { no: 6, text: "Kepala Sekolah secara konsisten mewujudkan perbaikan fasilitas serta mutu pembelajaran sekolah dari waktu ke waktu." },
+          { no: 7, text: "Kepala Sekolah menunjukkan kepedulian terhadap kondisi dan kebutuhan khusus siswa, termasuk siswa dari keluarga kurang mampu." },
+          { no: 8, text: "Kepala Sekolah menjamin semua siswa mendapatkan hak belajar, perlakuan yang adil, dan kesempatan berkembang yang sama." },
+          { no: 9, text: "Kepala Sekolah memastikan lingkungan sekolah aman, selamat, dan bebas dari perundungan (bullying) serta kekerasan." },
+          { no: 10, text: "Kepala Sekolah mendorong guru-guru untuk bersikap ramah, profesional, dan perhatian terhadap perkembangan belajar anak." },
+          { no: 11, text: "Kepala Sekolah melibatkan orang tua/wali murid dan Komite Sekolah secara aktif dalam mendukung program kegiatan sekolah." },
+          { no: 12, text: "Kepala Sekolah membangun komunikasi yang terbuka, ramah, dan mudah diakses oleh orang tua saat memerlukan konsultasi." },
+          { no: 13, text: "Kepala Sekolah mengoordinasikan kegiatan pertemuan orang tua (seperti pembagian rapor atau rapat parenting) secara terstruktur." },
+          { no: 14, text: "Kepala Sekolah aktif mengajak orang tua dan masyarakat sekitar bekerja sama mendukung kebersihan, kesehatan, dan kemajuan sekolah." },
+          { no: 15, text: "Kepala Sekolah menghubungkan sekolah dengan lembaga/instansi luar untuk meningkatkan mutu dan reputasi sekolah di masyarakat." },
+          { no: 16, text: "Kepala Sekolah secara rutin menginformasikan prestasi anak, karya siswa, dan kegiatan positif sekolah kepada orang tua." },
+          { no: 17, text: "Kepala Sekolah mewujudkan program sekolah yang secara nyata berfokus pada pembentukan karakter dan keberhasilan belajar murid." },
+          { no: 18, text: "Kepala Sekolah membudayakan kebiasaan positif (seperti senyum-sapa-salam, ibadah, literasi, dan disiplin) pada siswa di sekolah." },
+          { no: 19, text: "Kepala Sekolah memastikan orang tua menerima laporan perkembangan belajar dan capaian siswa secara berkala dan jelas." },
+          { no: 20, text: "Kepala Sekolah menyediakan suasana lingkungan sekolah yang asri, bersih, nyaman, dan ramah bagi seluruh anak." },
+          { no: 21, text: "Kepala Sekolah memantau proses belajar mengajar sehingga pembelajaran di kelas berjalan tertib dan menyenangkan bagi anak." },
+          { no: 22, text: "Kepala Sekolah mengupayakan ketersediaan sarana belajar, buku, dan fasilitas sekolah yang memadai dari berbagai sumber." },
+          { no: 23, text: "Kepala Sekolah mengelola dan merawat fasilitas sekolah (kelas, toilet, perpustakaan, lapangan) demi kenyamanan siswa." },
+          { no: 24, text: "Kepala Sekolah mengomunikasikan penggunaan dana sekolah/BOS dan sumbangan secara transparan dan dapat dipertanggungjawabkan." },
+          { no: 25, text: "Kepala Sekolah mensosialisasikan program kerja tahunan dan rencana pengembangan sekolah kepada orang tua murid/Komite." },
+          { no: 26, text: "Kepala Sekolah memastikan pelayanan administrasi orang tua (surat-menyurat, legalisir, atau mutasi) berjalan cepat dan ramah." },
+          { no: 27, text: "Kepala Sekolah merespon dengan cepat dan menindaklanjuti setiap keluhan atau masukan dari orang tua murid secara bijaksana." },
+          { no: 28, text: "Kepala Sekolah mengembangkan program unggulan atau kegiatan ekstra yang menarik dan bermanfaat bagi perkembangan anak." },
+          { no: 29, text: "Kepala Sekolah menunjukkan komitmen, etos kerja tinggi, dan tanggung jawab penuh dalam memimpin sekolah setiap hari." },
+          { no: 30, text: "Kepala Sekolah membangun kerja sama dengan pihak luar (seperti Puskesmas, Kepolisian, atau tokoh daerah) untuk kegiatan edukasi anak." }
+        ]
+      },
+      "Murid": {
+        title: "Instrumen PKKS 2026 — Responden Murid / Siswa",
+        desc: "Halo Adik-adik! Pilih angka 1 sampai 5 yang paling sesuai menggambarkan sikap Bapak/Ibu Kepala Sekolah di sekolah kita. Jawabanmu rahasia!",
+        scaleShort: ["Sangat Tidak Setuju", "Kurang Setuju", "Cukup Setuju", "Setuju", "Sangat Setuju"],
+        questions: [
+          { no: 1, text: "Bapak/Ibu Kepala Sekolah memberikan contoh tutur kata dan perilaku yang sopan serta rajin beribadah di sekolah." },
+          { no: 2, text: "Bapak/Ibu Kepala Sekolah bersikap sabar, ramah, dan tidak pernah marah-marah saat berbicara dengan siswa." },
+          { no: 3, text: "Bapak/Ibu Kepala Sekolah memperlakukan seluruh siswa secara adil tanpa membeda-bedakan latar belakang atau kemampuan." },
+          { no: 4, text: "Bapak/Ibu Kepala Sekolah mau mendengarkan pendapat, cerita, atau masukan dari para siswa untuk kemajuan sekolah." },
+          { no: 5, text: "Bapak/Ibu Kepala Sekolah mendukung pemanfaatan teknologi dan kegiatan kekinian yang disukai siswa dalam belajar." },
+          { no: 6, text: "Bapak/Ibu Kepala Sekolah terus berusaha membuat suasana sekolah menjadi lebih baik dan menyenangkan dari hari ke hari." },
+          { no: 7, text: "Bapak/Ibu Kepala Sekolah peduli jika ada siswa yang mengalami kesulitan dan siap memberikan bantuan." },
+          { no: 8, text: "Bapak/Ibu Kepala Sekolah memastikan setiap siswa mendapatkan kesempatan belajar yang sama dan fasilitas yang layak." },
+          { no: 9, text: "Bapak/Ibu Kepala Sekolah menjaga sekolah agar selalu aman, nyaman, serta bebas dari tindakan perundungan (bullying) atau kekerasan." },
+          { no: 10, text: "Bapak/Ibu Kepala Sekolah memotivasi Bapak/Ibu Guru agar mengajar dengan cara yang menarik dan tidak membosankan." },
+          { no: 11, text: "Bapak/Ibu Kepala Sekolah mengajak orang tua murid untuk mendukung kegiatan-kegiatan di sekolah." },
+          { no: 12, text: "Bapak/Ibu Kepala Sekolah sering menyapa, tersenyum, dan mengobrol akrab saat bertemu siswa di lingkungan sekolah." },
+          { no: 13, text: "Bapak/Ibu Kepala Sekolah melibatkan siswa dan pengurus kelas dalam merencanakan acara-acara sekolah." },
+          { no: 14, text: "Bapak/Ibu Kepala Sekolah ikut serta secara langsung dalam kegiatan bersama seperti kerja bakti, senam, atau pembiasaan pagi." },
+          { no: 15, text: "Bapak/Ibu Kepala Sekolah aktif membawa sekolah kita dikenal berprestasi dan membanggakan di luar sekolah." },
+          { no: 16, text: "Bapak/Ibu Kepala Sekolah memberikan pujian atau penghargaan kepada siswa yang meraih prestasi atau berbuat kebaikan." },
+          { no: 17, text: "Bapak/Ibu Kepala Sekolah selalu mengutamakan kenyamanan, keamanan, dan kebahagiaan siswa dalam belajar." },
+          { no: 18, text: "Bapak/Ibu Kepala Sekolah membiasakan budaya baik di sekolah (seperti senyum-sapa-salam, budaya membaca, dan disiplin)." },
+          { no: 19, text: "Bapak/Ibu Kepala Sekolah memperhatikan nilai dan perkembangan belajar siswa agar semua murid bisa berhasil." },
+          { no: 20, text: "Bapak/Ibu Kepala Sekolah menjaga lingkungan sekolah agar tetap bersih, indah, hijau, dan sehat." },
+          { no: 21, text: "Bapak/Ibu Kepala Sekolah sesekali berkunjung ke kelas-kelas untuk memastikan kegiatan belajar mengajar berjalan dengan lancar." },
+          { no: 22, text: "Bapak/Ibu Kepala Sekolah berusaha melengkapi perpustakaan, alat peraga, serta peralatan olahraga dan seni di sekolah." },
+          { no: 23, text: "Bapak/Ibu Kepala Sekolah memastikan ruang kelas, toilet, dan sarana sekolah terawat bersih serta nyaman digunakan." },
+          { no: 24, text: "Bapak/Ibu Kepala Sekolah mengelola dan merawat barang-barang milik sekolah dengan jujur dan penuh tanggung jawab." },
+          { no: 25, text: "Bapak/Ibu Kepala Sekolah mau mendengarkan usulan dan ide dari perwakilan siswa atau pengurus kelas." },
+          { no: 26, text: "Bapak/Ibu Kepala Sekolah memastikan jadwal pelajaran, jam masuk, dan aturan sekolah berjalan dengan tertib." },
+          { no: 27, text: "Bapak/Ibu Kepala Sekolah cepat tanggap membantu menyelesaikan jika ada masalah atau kendala yang dialami siswa di sekolah." },
+          { no: 28, text: "Bapak/Ibu Kepala Sekolah mendukung berbagai kegiatan ekstrakurikuler (ekskul), minat bakat, dan perlombaan bagi siswa." },
+          { no: 29, text: "Bapak/Ibu Kepala Sekolah selalu bersemangat, hadir tepat waktu, dan menjadi teladan bagi seluruh murid." },
+          { no: 30, text: "Bapak/Ibu Kepala Sekolah mendukung kegiatan seni, budaya, dan kearifan lokal Kabupaten Subang di sekolah kita." }
+        ]
+      }
+    };
+
+    // STATE UTAMA APLIKASI
+    let schools = [];
+    let evaluations = [];
+    let rankingChart = null;
+    let radarChart = null;
+    let raterChart = null;
+    let manageCompletionChart = null;
+    let isAdminUnlocked = false;
+    let pendingTargetTab = null;
+    const ADMIN_PIN = "99";
+
+    // 1. INISIALISASI STATE & PENYIMPANAN LOKAL (LOCALSTORAGE)
+    function loadState() {
+      try {
+        const savedSchools = localStorage.getItem(STORAGE_KEY_SCHOOLS);
+        schools = savedSchools ? JSON.parse(savedSchools) : JSON.parse(JSON.stringify(INITIAL_SCHOOLS));
+        if (!Array.isArray(schools) || schools.length === 0) {
+          schools = JSON.parse(JSON.stringify(INITIAL_SCHOOLS));
+        }
+      } catch (err) {
+        schools = JSON.parse(JSON.stringify(INITIAL_SCHOOLS));
+      }
+
+      try {
+        const savedEvals = localStorage.getItem(STORAGE_KEY_EVALS);
+        // Default awal kosong ([]) sesuai permintaan agar terlihat jelas sekolah yang sudah & belum mengisi
+        evaluations = savedEvals ? JSON.parse(savedEvals) : [];
+        if (!Array.isArray(evaluations)) {
+          evaluations = [];
+        }
+      } catch (err) {
+        evaluations = [];
+      }
+
+      saveSchoolsToStorage();
+      saveEvalsToStorage();
+      updateSchoolCountBadges();
+      handleKecamatanChange();
+    }
+
+    function saveSchoolsToStorage() {
+      try {
+        localStorage.setItem(STORAGE_KEY_SCHOOLS, JSON.stringify(schools));
+      } catch (e) {
+        console.warn("Gagal menyimpan data sekolah ke localStorage:", e);
+      }
+      updateSchoolCountBadges();
+    }
+
+    function saveEvalsToStorage() {
+      try {
+        localStorage.setItem(STORAGE_KEY_EVALS, JSON.stringify(evaluations));
+      } catch (e) {
+        console.warn("Gagal menyimpan data evaluasi ke localStorage:", e);
+      }
+    }
+
+    function updateSchoolCountBadges() {
+      const total = schools.length;
+      const sp = schools.filter(s => s.kecamatan === "Serangpanjang").length;
+      const sg = schools.filter(s => s.kecamatan === "Sagalaherang").length;
+
+      const headerCount = document.getElementById("header-school-count");
+      if (headerCount) headerCount.textContent = total;
+
+      const bAll = document.getElementById("badge-count-all");
+      const bSp = document.getElementById("badge-count-sp");
+      const bSg = document.getElementById("badge-count-sg");
+      if (bAll) bAll.textContent = `Total: ${total} SD`;
+      if (bSp) bSp.textContent = `Kec. Serangpanjang: ${sp} SD`;
+      if (bSg) bSg.textContent = `Kec. Sagalaherang: ${sg} SD`;
+
+      const kecSel = document.getElementById("select-kecamatan");
+      if (kecSel && kecSel.options.length >= 3) {
+        kecSel.options[1].textContent = `Kecamatan Serangpanjang (${sp} SD)`;
+        kecSel.options[2].textContent = `Kecamatan Sagalaherang (${sg} SD)`;
+      }
+
+      const dashKecSel = document.getElementById("filter-dashboard-kecamatan");
+      if (dashKecSel && dashKecSel.options.length >= 3) {
+        dashKecSel.options[0].textContent = `Semua Kecamatan (${total} SD)`;
+        dashKecSel.options[1].textContent = `Kec. Serangpanjang (${sp} SD)`;
+        dashKecSel.options[2].textContent = `Kec. Sagalaherang (${sg} SD)`;
+      }
+    }
+
+    // DATA SIMULASI AWAL 360° (5 RESPONDEN PER SEKOLAH) AGAR DASHBOARD LANGSUNG INFORMATIF
+    function generateInitialEvaluations() {
+      const roles = ["Pengawas Sekolah", "Guru", "Tata Usaha", "Orang Tua", "Murid"];
+      const seed = [];
+      schools.forEach((sch, idx) => {
+        // Profil kinerja realistis untuk 38 SD (sebagian besar Level 5 Ahli, beberapa prioritas klinis)
+        const isPriority = sch.id === "SG-19" || sch.id === "SP-12" || sch.id === "SG-22";
+        const baseScore = isPriority ? 3.55 : (4.30 + ((idx * 7) % 60) / 100);
+
+        roles.forEach((role, rIdx) => {
+          const roleOffset = (rIdx - 2) * 0.05;
+          const dimScores = {
+            Kepribadian: clampScore(baseScore + 0.14 + roleOffset),
+            Sosial: clampScore(baseScore + 0.10 + roleOffset),
+            Profesional: clampScore(baseScore + 0.04 + roleOffset),
+            Manajerial: clampScore((isPriority ? 3.32 : baseScore - 0.02) + roleOffset),
+            Kewirausahaan: clampScore(baseScore + 0.02 + roleOffset)
+          };
+          const composite = Number(((dimScores.Kepribadian + dimScores.Sosial + dimScores.Profesional + dimScores.Manajerial + dimScores.Kewirausahaan) / 5).toFixed(2));
+          seed.push({
+            id: `SEED-${sch.id}-${rIdx}`,
+            schoolId: sch.id,
+            role: role,
+            evaluator: role === "Pengawas Sekolah" ? "Titi Wahyuni, S.Pd" : `Responden ${role} (Anonim)`,
+            dimScores,
+            composite,
+            timestamp: "2026-11-15T08:00:00.000Z"
+          });
+        });
+      });
+      return seed;
+    }
+
+    function clampScore(val) {
+      return Number(Math.min(5.0, Math.max(1.0, val)).toFixed(2));
+    }
+
+    // 2. LOGIKA TAB 1: STEPPER & INSTRUMEN PENILAIAN 360°
+    function handleKecamatanChange() {
+      const kec = document.getElementById("select-kecamatan").value;
+      const schSelect = document.getElementById("select-sekolah");
+      const prevVal = schSelect.value;
+
+      schSelect.innerHTML = "";
+      if (!kec) {
+        schSelect.disabled = true;
+        schSelect.innerHTML = `<option value="">-- Pilih Kecamatan Terlebih Dahulu --</option>`;
+        document.getElementById("school-info-banner").classList.add("hidden");
+        updateStepperState();
+        return;
+      }
+
+      const filtered = schools.filter(s => s.kecamatan === kec);
+      schSelect.disabled = false;
+      schSelect.innerHTML = `<option value="">-- Pilih Sekolah Dasar (${filtered.length} SD) --</option>`;
+      filtered.forEach(s => {
+        const opt = document.createElement("option");
+        opt.value = s.id;
+        opt.textContent = `${s.nama} — KS: ${s.kepsek}${s.status === "Plt" ? " (Plt)" : ""}`;
+        schSelect.appendChild(opt);
+      });
+
+      if (prevVal && filtered.some(s => s.id === prevVal)) {
+        schSelect.value = prevVal;
+      }
+      handleSekolahChange();
+    }
+
+    function handleSekolahChange() {
+      const schId = document.getElementById("select-sekolah").value;
+      const banner = document.getElementById("school-info-banner");
+      const sch = schools.find(s => s.id === schId);
+
+      if (!sch) {
+        banner.classList.add("hidden");
+        updateStepperState();
+        return;
+      }
+
+      banner.classList.remove("hidden");
+      document.getElementById("display-kepsek-name").textContent = `${sch.kepsek}${sch.status === "Plt" ? " (Plt)" : ""}`;
+      document.getElementById("display-school-meta").textContent = `${sch.nama} • Kecamatan ${sch.kecamatan}, Kabupaten Subang`;
+
+      const badge = document.getElementById("display-status-badge");
+      if (sch.status === "Plt") {
+        badge.textContent = "PLT (PELAKSANA TUGAS)";
+        badge.className = "px-2.5 py-0.5 rounded-full text-[11px] font-extrabold uppercase tracking-wide bg-amber-100 text-amber-900 border border-amber-300";
+      } else {
+        badge.textContent = "DEFINITIF";
+        badge.className = "px-2.5 py-0.5 rounded-full text-[11px] font-extrabold uppercase tracking-wide bg-emerald-100 text-emerald-800 border border-emerald-300";
+      }
+
+      updateStepperState();
+    }
+
+    function selectRoleCard(role) {
+      document.getElementById("select-kategori").value = role;
+      document.getElementById("selected-role-pill").textContent = `Terpilih: ${role}`;
+      document.getElementById("selected-role-pill").className = "text-xs font-extrabold text-emerald-400";
+
+      document.querySelectorAll(".role-card").forEach(card => {
+        if (card.dataset.role === role) {
+          card.classList.add("active");
+        } else {
+          card.classList.remove("active");
+        }
+      });
+
+      const pengawasBox = document.getElementById("pengawas-name-box");
+      if (role === "Pengawas Sekolah") {
+        pengawasBox.classList.remove("hidden");
+      } else {
+        pengawasBox.classList.add("hidden");
+      }
+
+      renderInstrumentQuestions(role);
+      updateStepperState();
+    }
+
+    function updateStepperState() {
+      const schId = document.getElementById("select-sekolah").value;
+      const role = document.getElementById("select-kategori").value;
+
+      const s1 = document.getElementById("step-ind-1");
+      const s2 = document.getElementById("step-ind-2");
+      const s3 = document.getElementById("step-ind-3");
+      const n2 = document.getElementById("step-num-2");
+      const n3 = document.getElementById("step-num-3");
+
+      s1.className = schId
+        ? "flex items-center gap-3 p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 transition-all"
+        : "flex items-center gap-3 p-2.5 rounded-xl bg-blue-50 border border-blue-200 transition-all";
+
+      if (role) {
+        s2.className = "flex items-center gap-3 p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 transition-all";
+        n2.className = "w-8 h-8 rounded-xl bg-emerald-600 text-white font-extrabold text-xs flex items-center justify-center shrink-0";
+      } else if (schId) {
+        s2.className = "flex items-center gap-3 p-2.5 rounded-xl bg-blue-50 border border-blue-200 transition-all";
+        n2.className = "w-8 h-8 rounded-xl bg-blue-900 text-white font-extrabold text-xs flex items-center justify-center shrink-0";
+      } else {
+        s2.className = "flex items-center gap-3 p-2.5 rounded-xl bg-slate-50 border border-slate-200 transition-all";
+        n2.className = "w-8 h-8 rounded-xl bg-slate-200 text-slate-600 font-extrabold text-xs flex items-center justify-center shrink-0";
+      }
+
+      const step3Wrapper = document.getElementById("step3-wrapper");
+      const emptyState = document.getElementById("empty-form-state");
+
+      if (schId && role) {
+        step3Wrapper.classList.remove("hidden");
+        emptyState.classList.add("hidden");
+        s3.className = "flex items-center gap-3 p-2.5 rounded-xl bg-blue-50 border border-blue-200 transition-all";
+        n3.className = "w-8 h-8 rounded-xl bg-blue-900 text-white font-extrabold text-xs flex items-center justify-center shrink-0";
+      } else {
+        step3Wrapper.classList.add("hidden");
+        emptyState.classList.remove("hidden");
+        s3.className = "flex items-center gap-3 p-2.5 rounded-xl bg-slate-50 border border-slate-200 transition-all";
+        n3.className = "w-8 h-8 rounded-xl bg-slate-200 text-slate-600 font-extrabold text-xs flex items-center justify-center shrink-0";
+      }
+    }
+
+    function renderInstrumentQuestions(role) {
+      const inst = INSTRUMENTS_DB[role];
+      if (!inst) return;
+
+      document.getElementById("form-role-title").textContent = inst.title;
+      document.getElementById("form-role-desc").textContent = inst.desc;
+
+      const container = document.getElementById("questions-container");
+      let html = "";
+
+      DIMENSIONS_MAP.forEach(dim => {
+        const [startNo, endNo] = dim.range;
+        const items = inst.questions.filter(q => q.no >= startNo && q.no <= endNo);
+
+        html += `
+          <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="bg-gradient-to-r ${dim.headerBg} text-white px-6 py-3.5 flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <span class="px-2.5 py-0.5 rounded-lg bg-white/15 text-xs font-extrabold">Dimensi ${dim.label}</span>
+                <span class="text-xs text-slate-200 hidden sm:inline">Butir ${startNo} s.d. ${endNo} (${items.length} Sub-Indikator)</span>
+              </div>
+              <span class="text-[11px] font-bold text-emerald-300">Skala 1 – 5</span>
+            </div>
+            <div class="divide-y divide-slate-200">
+        `;
+
+        items.forEach(q => {
+          html += `
+            <div class="p-5 sm:p-6 hover:bg-slate-50/80 transition">
+              <div class="flex flex-col gap-4">
+                <div class="flex items-start gap-3">
+                  <span class="w-7 h-7 rounded-xl bg-blue-900 text-white font-extrabold text-xs flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
+                    ${q.no}
+                  </span>
+                  <div class="flex-1">
+                    <p class="text-sm font-semibold text-slate-900 leading-relaxed">${q.text}</p>
+                    ${q.bukti ? `
+                      <div class="mt-2 inline-flex flex-wrap items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-900 text-[11px] font-bold">
+                        <span>📁 Verifikasi Bukti Fisik:</span>
+                        <span>${q.bukti}</span>
+                      </div>
+                    ` : ""}
+                  </div>
+                </div>
+
+                <!-- Tombol Skala 1 - 5 Utuh Tanpa Terpotong -->
+                <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 sm:pl-10">
+                  ${[1, 2, 3, 4, 5].map(val => `
+                    <label class="cursor-pointer flex">
+                      <input type="radio" name="q_${q.no}" value="${val}" onchange="updateProgressBar()" class="sr-only scale-radio" required />
+                      <div class="scale-btn w-full min-h-[76px] px-2 py-2.5 rounded-xl border-2 border-slate-200 bg-white hover:border-blue-400 flex flex-col items-center justify-center text-center transition-all select-none">
+                        <span class="text-base sm:text-lg font-extrabold leading-none">${val}</span>
+                        <span class="scale-sub text-[11px] font-semibold text-slate-600 mt-1.5 leading-tight whitespace-normal break-words">
+                          ${inst.scaleShort[val - 1]}
+                        </span>
+                      </div>
+                    </label>
+                  `).join("")}
+                </div>
+              </div>
+            </div>
+          `;
+        });
+
+        html += `
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+      updateProgressBar();
+    }
+
+    function updateProgressBar() {
+      const form = document.getElementById("pkks-survey-form");
+      if (!form) return;
+      let answered = 0;
+      for (let i = 1; i <= 30; i++) {
+        if (form.querySelector(`input[name="q_${i}"]:checked`)) {
+          answered++;
+        }
+      }
+      const pct = Math.round((answered / 30) * 100);
+      document.getElementById("progress-text").textContent = `Terisi ${answered} dari 30 butir (${pct}%)`;
+      document.getElementById("progress-bar-fill").style.width = `${pct}%`;
+    }
+
+    function autoFillDemo() {
+      const form = document.getElementById("pkks-survey-form");
+      if (!form) return;
+      for (let i = 1; i <= 30; i++) {
+        const val = i % 4 === 0 ? 5 : 4;
+        const radio = form.querySelector(`input[name="q_${i}"][value="${val}"]`);
+        if (radio) radio.checked = true;
+      }
+      updateProgressBar();
+      showToast("Simulasi skor otomatis (4 & 5) telah diisi untuk 30 butir.", "info");
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      const schId = document.getElementById("select-sekolah").value;
+      const kat = document.getElementById("select-kategori").value;
+      const sch = schools.find(s => s.id === schId);
+
+      if (!sch || !kat) {
+        showToast("Silakan pilih Kecamatan, Sekolah Dasar, dan Kategori Responden terlebih dahulu.", "error");
+        return;
+      }
+
+      const form = document.getElementById("pkks-survey-form");
+      const rawAnswers = {};
+      for (let i = 1; i <= 30; i++) {
+        const checked = form.querySelector(`input[name="q_${i}"]:checked`);
+        if (!checked) {
+          showToast(`Pertanyaan nomor ${i} belum diisi. Mohon lengkapi seluruh 30 butir.`, "error");
+          return;
+        }
+        rawAnswers[i] = Number(checked.value);
+      }
+
+      const dimScores = {};
+      DIMENSIONS_MAP.forEach(dim => {
+        const [startNo, endNo] = dim.range;
+        let sum = 0;
+        let count = 0;
+        for (let n = startNo; n <= endNo; n++) {
+          sum += rawAnswers[n];
+          count++;
+        }
+        dimScores[dim.key] = Number((sum / count).toFixed(2));
+      });
+
+      const composite = Number(((dimScores.Kepribadian + dimScores.Sosial + dimScores.Profesional + dimScores.Manajerial + dimScores.Kewirausahaan) / 5).toFixed(2));
+      const evaluatorName = kat === "Pengawas Sekolah"
+        ? (document.getElementById("input-nama-pengawas").value.trim() || "Titi Wahyuni, S.Pd")
+        : `Responden ${kat} (Anonim)`;
+
+      evaluations.push({
+        id: `EVAL-${Date.now()}`,
+        schoolId: sch.id,
+        role: kat,
+        evaluator: evaluatorName,
+        dimScores,
+        composite,
+        timestamp: new Date().toISOString()
+      });
+
+      saveEvalsToStorage();
+      document.getElementById("pkks-survey-form").reset();
+      updateProgressBar();
+
+      showToast(`Terima kasih! Penilaian ${kat} untuk ${sch.nama} berhasil disimpan.`, "success");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    // 3. LOGIKA TAB 2: EXECUTIVE SUMMARY-PKKS & GRAFIK
+    function getPredikat(score) {
+      if (score >= 4.20) {
+        return { label: "Level 5 (Ahli)", short: "Ahli", badgeClass: "bg-emerald-100 text-emerald-900 border border-emerald-300" };
+      } else if (score >= 3.40) {
+        return { label: "Level 4 (Mumpuni)", short: "Mumpuni", badgeClass: "bg-blue-100 text-blue-900 border border-blue-300" };
+      } else {
+        return { label: "Level 3 (Cakap / Pembinaan)", short: "Perlu Pembinaan", badgeClass: "bg-red-100 text-red-900 border border-red-300" };
+      }
+    }
+
+    function handleDashboardKecChange() {
+      const kec = document.getElementById("filter-dashboard-kecamatan").value;
+      const schSelect = document.getElementById("filter-dashboard-sekolah");
+      const prev = schSelect.value;
+
+      const filtered = kec === "ALL" ? schools : schools.filter(s => s.kecamatan === kec);
+      schSelect.innerHTML = `<option value="ALL">Semua Sekolah Binaan (${filtered.length} SD)</option>`;
+      filtered.forEach(s => {
+        const opt = document.createElement("option");
+        opt.value = s.id;
+        opt.textContent = `${s.nama} (${s.kecamatan})`;
+        schSelect.appendChild(opt);
+      });
+
+      if (prev && (prev === "ALL" || filtered.some(s => s.id === prev))) {
+        schSelect.value = prev;
+      } else {
+        schSelect.value = "ALL";
+      }
+
+      renderDashboard();
+    }
+
+    function renderDashboard() {
+      const kecFilter = document.getElementById("filter-dashboard-kecamatan").value;
+      const schFilter = document.getElementById("filter-dashboard-sekolah").value;
+      const searchQuery = (document.getElementById("dashboard-table-search")?.value || "").toLowerCase().trim();
+
+      let targetSchools = schools.slice();
+      if (kecFilter !== "ALL") {
+        targetSchools = targetSchools.filter(s => s.kecamatan === kecFilter);
+      }
+      if (schFilter !== "ALL") {
+        targetSchools = targetSchools.filter(s => s.id === schFilter);
+      }
+
+      // Hitung agregasi skor per sekolah dari seluruh rater 360°
+      const schoolStats = targetSchools.map(sch => {
+        const schEvals = evaluations.filter(ev => ev.schoolId === sch.id);
+        const dims = { Kepribadian: 0, Sosial: 0, Profesional: 0, Manajerial: 0, Kewirausahaan: 0 };
+
+        if (schEvals.length > 0) {
+          schEvals.forEach(ev => {
+            DIMENSIONS_MAP.forEach(d => {
+              dims[d.key] += (ev.dimScores[d.key] || 0);
+            });
+          });
+          DIMENSIONS_MAP.forEach(d => {
+            dims[d.key] = Number((dims[d.key] / schEvals.length).toFixed(2));
+          });
+        }
+
+        const composite = schEvals.length > 0
+          ? Number(((dims.Kepribadian + dims.Sosial + dims.Profesional + dims.Manajerial + dims.Kewirausahaan) / 5).toFixed(2))
+          : 0;
+
+        return {
+          ...sch,
+          evalCount: schEvals.length,
+          dims,
+          composite,
+          predikat: getPredikat(composite)
+        };
+      });
+
+      // Urutkan skor tertinggi ke terendah
+      const sortedStats = [...schoolStats].sort((a, b) => b.composite - a.composite);
+
+      // Update Subtitle & KPI
+      const subtitleEl = document.getElementById("exec-subtitle");
+      if (schFilter !== "ALL" && sortedStats.length === 1) {
+        const s = sortedStats[0];
+        subtitleEl.textContent = `Profil Evaluasi Individual: ${s.nama} • Kepala Sekolah: ${s.kepsek}${s.status === "Plt" ? " (Plt)" : ""} • Kec. ${s.kecamatan}`;
+      } else if (kecFilter !== "ALL") {
+        subtitleEl.textContent = `Wilayah Binaan Kecamatan ${kecFilter} (${sortedStats.length} Sekolah Dasar) • Kabupaten Subang`;
+      } else {
+        const spCount = schools.filter(s => s.kecamatan === "Serangpanjang").length;
+        const sgCount = schools.filter(s => s.kecamatan === "Sagalaherang").length;
+        subtitleEl.textContent = `Wilayah Binaan Kecamatan Serangpanjang (${spCount} SD) & Kecamatan Sagalaherang (${sgCount} SD) • Kabupaten Subang`;
+      }
+
+      const validSchools = sortedStats.filter(s => s.evalCount > 0);
+      const avgComposite = validSchools.length > 0
+        ? Number((validSchools.reduce((acc, s) => acc + s.composite, 0) / validSchools.length).toFixed(2))
+        : 0;
+      const ahliCount = validSchools.filter(s => s.composite >= 4.20).length;
+      const ahliPct = validSchools.length > 0 ? ((ahliCount / validSchools.length) * 100).toFixed(1) : "0.0";
+
+      document.getElementById("kpi-total-sekolah").textContent = `${sortedStats.length} SD`;
+      if (kecFilter === "ALL" && schFilter === "ALL") {
+        const spCount = schools.filter(s => s.kecamatan === "Serangpanjang").length;
+        const sgCount = schools.filter(s => s.kecamatan === "Sagalaherang").length;
+        document.getElementById("kpi-total-sub").textContent = `${spCount} Serangpanjang & ${sgCount} Sagalaherang`;
+      } else {
+        document.getElementById("kpi-total-sub").textContent = `100% Terpetakan (30 Sub-Indikator)`;
+      }
+
+      document.getElementById("kpi-rata-rata").textContent = avgComposite.toFixed(2);
+      const avgPred = getPredikat(avgComposite);
+      const predBadge = document.getElementById("kpi-predikat-badge");
+      predBadge.textContent = avgPred.label;
+      predBadge.className = `inline-block px-2.5 py-0.5 rounded-md text-[11px] font-bold ${avgPred.badgeClass}`;
+
+      document.getElementById("kpi-ahli-count").textContent = `${ahliCount} SD (${ahliPct}%)`;
+      document.getElementById("kpi-ahli-sub").textContent = `Dari ${validSchools.length} SD dengan skor ≥ 4.20`;
+
+      // Cari sekolah/dimensi prioritas pembinaan
+      const lowestSchool = validSchools.length > 0 ? validSchools[validSchools.length - 1] : null;
+      if (lowestSchool) {
+        let minDimKey = "Manajerial";
+        let minDimVal = lowestSchool.dims.Manajerial;
+        DIMENSIONS_MAP.forEach(d => {
+          if (lowestSchool.dims[d.key] < minDimVal) {
+            minDimVal = lowestSchool.dims[d.key];
+            minDimKey = d.key;
+          }
+        });
+        document.getElementById("kpi-perhatian-sekolah").textContent = lowestSchool.nama;
+        document.getElementById("kpi-perhatian-detail").textContent = `${minDimKey}: ${minDimVal.toFixed(2)} (Komposit ${lowestSchool.composite.toFixed(2)})`;
+      } else {
+        document.getElementById("kpi-perhatian-sekolah").textContent = "-";
+        document.getElementById("kpi-perhatian-detail").textContent = "Belum ada data evaluasi";
+      }
+
+      // Hitung rata-rata 5 dimensi & 5 rater untuk grafik
+      const avgDims = { Kepribadian: 0, Sosial: 0, Profesional: 0, Manajerial: 0, Kewirausahaan: 0 };
+      if (validSchools.length > 0) {
+        validSchools.forEach(s => {
+          DIMENSIONS_MAP.forEach(d => {
+            avgDims[d.key] += s.dims[d.key];
+          });
+        });
+        DIMENSIONS_MAP.forEach(d => {
+          avgDims[d.key] = Number((avgDims[d.key] / validSchools.length).toFixed(2));
+        });
+      }
+
+      const targetIds = new Set(targetSchools.map(s => s.id));
+      const relevantEvals = evaluations.filter(ev => targetIds.has(ev.schoolId));
+      document.getElementById("total-responden-badge").textContent = `Total ${relevantEvals.length} Responden 360°`;
+
+      const roles = ["Pengawas Sekolah", "Guru", "Tata Usaha", "Orang Tua", "Murid"];
+      const raterAverages = roles.map(r => {
+        const rEvals = relevantEvals.filter(ev => ev.role === r);
+        if (rEvals.length === 0) return 0;
+        const sum = rEvals.reduce((acc, ev) => acc + ev.composite, 0);
+        return Number((sum / rEvals.length).toFixed(2));
+      });
+
+      renderCharts(sortedStats, avgDims, roles, raterAverages);
+      renderRekapTable(sortedStats, searchQuery);
+      renderNotesAndRecommendations(sortedStats, validSchools, avgDims, lowestSchool);
+    }
+
+    function renderCharts(sortedStats, avgDims, roles, raterAverages) {
+      // 1. Grafik Peringkat (Top 8 + 2 Terbawah jika lebih dari 10 sekolah)
+      let displaySchools = sortedStats;
+      if (sortedStats.length > 10) {
+        displaySchools = [...sortedStats.slice(0, 8), ...sortedStats.slice(-2)];
+      }
+
+      const rankLabels = displaySchools.map(s => s.nama);
+      const rankData = displaySchools.map(s => s.composite);
+      const rankColors = displaySchools.map(s => s.composite >= 4.20 ? "#1e3a8a" : (s.composite >= 3.40 ? "#0284c7" : "#dc2626"));
+
+      const ctxRank = document.getElementById("chart-ranking").getContext("2d");
+      if (rankingChart) rankingChart.destroy();
+      rankingChart = new Chart(ctxRank, {
+        type: "bar",
+        data: {
+          labels: rankLabels,
+          datasets: [{
+            label: "Skor Komposit 360°",
+            data: rankData,
+            backgroundColor: rankColors,
+            borderRadius: 6,
+            barThickness: 16
+          }]
+        },
+        options: {
+          indexAxis: "y",
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                afterLabel: (ctx) => {
+                  const sch = displaySchools[ctx.dataIndex];
+                  return `KS: ${sch.kepsek}${sch.status === "Plt" ? " (Plt)" : ""}\nPredikat: ${sch.predikat.label}`;
+                }
+              }
+            }
+          },
+          scales: {
+            x: { min: 0, max: 5, grid: { color: "#e2e8f0" }, ticks: { font: { size: 10, weight: "bold" } } },
+            y: { grid: { display: false }, ticks: { font: { size: 10, weight: "bold" }, color: "#0f172a" } }
+          }
+        }
+      });
+
+      // 2. Grafik Radar 5 Dimensi
+      const ctxRadar = document.getElementById("chart-radar").getContext("2d");
+      if (radarChart) radarChart.destroy();
+      radarChart = new Chart(ctxRadar, {
+        type: "radar",
+        data: {
+          labels: ["Kepribadian", "Sosial", "Profesional", "Manajerial", "Kewirausahaan"],
+          datasets: [
+            {
+              label: "Capaian Rata-Rata",
+              data: [avgDims.Kepribadian, avgDims.Sosial, avgDims.Profesional, avgDims.Manajerial, avgDims.Kewirausahaan],
+              backgroundColor: "rgba(30, 58, 138, 0.20)",
+              borderColor: "#1e3a8a",
+              borderWidth: 2.5,
+              pointBackgroundColor: "#10b981",
+              pointRadius: 4
+            },
+            {
+              label: "Target Maksimal (5.00)",
+              data: [5, 5, 5, 5, 5],
+              backgroundColor: "transparent",
+              borderColor: "#94a3b8",
+              borderDash: [5, 5],
+              borderWidth: 1.5,
+              pointRadius: 0
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            r: {
+              min: 2.5,
+              max: 5.0,
+              ticks: { stepSize: 0.5, font: { size: 9 } },
+              pointLabels: { font: { size: 11, weight: "bold" }, color: "#0f172a" }
+            }
+          },
+          plugins: {
+            legend: { position: "bottom", labels: { boxWidth: 12, font: { size: 10, weight: "bold" } } }
+          }
+        }
+      });
+
+      // 3. Grafik Triangulasi Multi-Rater
+      const ctxRater = document.getElementById("chart-rater").getContext("2d");
+      if (raterChart) raterChart.destroy();
+      raterChart = new Chart(ctxRater, {
+        type: "bar",
+        data: {
+          labels: roles,
+          datasets: [{
+            label: "Rata-Rata Skor per Unsur Responden",
+            data: raterAverages,
+            backgroundColor: ["#0f172a", "#1d4ed8", "#0891b2", "#059669", "#d97706"],
+            borderRadius: 8,
+            barThickness: 38
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            y: { min: 0, max: 5, grid: { color: "#e2e8f0" }, ticks: { font: { size: 10, weight: "bold" } } },
+            x: { grid: { display: false }, ticks: { font: { size: 11, weight: "bold" }, color: "#0f172a" } }
+          }
+        }
+      });
+    }
+
+    function renderRekapTable(sortedStats, searchQuery) {
+      const tbody = document.getElementById("rekap-table-body");
+      const filtered = searchQuery
+        ? sortedStats.filter(s => s.nama.toLowerCase().includes(searchQuery) || s.kepsek.toLowerCase().includes(searchQuery) || s.kecamatan.toLowerCase().includes(searchQuery))
+        : sortedStats;
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="10" class="py-8 text-center text-slate-500 font-semibold">Tidak ditemukan data sekolah sesuai pencarian.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map((s, idx) => {
+        const isLow = s.composite > 0 && s.composite < 4.20;
+        return `
+          <tr class="${isLow ? "bg-amber-50/50" : "hover:bg-slate-50"} transition">
+            <td class="py-2.5 px-3 text-center font-bold text-slate-500">${idx + 1}</td>
+            <td class="py-2.5 px-3">
+              <div class="font-extrabold text-slate-900">${s.nama}</div>
+              <div class="text-[11px] text-slate-500">Kec. ${s.kecamatan} • ${s.evalCount} Responden</div>
+            </td>
+            <td class="py-2.5 px-3">
+              <div class="font-bold text-slate-800">${s.kepsek}</div>
+              <span class="inline-block mt-0.5 px-2 py-0.2 rounded text-[10px] font-extrabold ${s.status === "Plt" ? "bg-amber-100 text-amber-900" : "bg-slate-100 text-slate-700"}">
+                ${s.status === "Plt" ? "Plt Kepala Sekolah" : "Definitif"}
+              </span>
+            </td>
+            <td class="py-2.5 px-2 text-center font-semibold text-slate-700">${s.dims.Kepribadian.toFixed(2)}</td>
+            <td class="py-2.5 px-2 text-center font-semibold text-slate-700">${s.dims.Sosial.toFixed(2)}</td>
+            <td class="py-2.5 px-2 text-center font-semibold text-slate-700">${s.dims.Profesional.toFixed(2)}</td>
+            <td class="py-2.5 px-2 text-center font-semibold ${s.dims.Manajerial < 3.60 ? "text-red-700 font-extrabold" : "text-slate-700"}">${s.dims.Manajerial.toFixed(2)}</td>
+            <td class="py-2.5 px-2 text-center font-semibold text-slate-700">${s.dims.Kewirausahaan.toFixed(2)}</td>
+            <td class="py-2.5 px-3 text-center">
+              <span class="inline-block px-2.5 py-1 rounded-lg bg-slate-900 text-white font-extrabold">${s.composite.toFixed(2)}</span>
+            </td>
+            <td class="py-2.5 px-3">
+              <span class="inline-block px-2.5 py-1 rounded-lg text-[11px] font-extrabold ${s.predikat.badgeClass}">
+                ${s.predikat.label}
+              </span>
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function renderNotesAndRecommendations(sortedStats, validSchools, avgDims, lowestSchool) {
+      const notesBox = document.getElementById("key-notes-box");
+      const recBox = document.getElementById("strategic-recommendations");
+
+      if (validSchools.length === 0) {
+        notesBox.innerHTML = `
+          <p>• <strong>Status Pengumpulan Data 360°:</strong> Belum ada responden yang mengirimkan isian instrumen untuk filter sekolah/kecamatan ini (0 dari ${sortedStats.length} SD).</p>
+          <p>• <strong>Pemetaan Jabatan Kepala Sekolah:</strong> Terdaftar <strong>${sortedStats.filter(s => s.status === "Definitif").length} Kepala Sekolah Definitif</strong> dan <strong>${sortedStats.filter(s => s.status === "Plt").length} Pelaksana Tugas (Plt)</strong> siap dinilai.</p>
+          <p>• <strong>Langkah Selanjutnya:</strong> Silakan arahkan responden (Pengawas, Guru, TU, Orang Tua, dan Murid) mengisi instrumen pada Tab 1.</p>
+        `;
+        recBox.innerHTML = `
+          <div class="bg-white p-3.5 rounded-xl border border-blue-100 shadow-sm sm:col-span-2">
+            <div class="font-extrabold text-blue-950 mb-1">Menunggu Masuknya Data Penilaian 360°</div>
+            <p>Rekomendasi strategis dan analisis kekuatan/kelemahan 5 Dimensi Kompetensi akan otomatis tersusun begitu responden mulai mengirimkan penilaian.</p>
+          </div>
+        `;
+        return;
+      }
+
+      // Temukan dimensi terkuat
+      let topDim = "Kepribadian";
+      let topVal = avgDims.Kepribadian;
+      DIMENSIONS_MAP.forEach(d => {
+        if (avgDims[d.key] > topVal) {
+          topVal = avgDims[d.key];
+          topDim = d.key;
+        }
+      });
+
+      const pltCount = sortedStats.filter(s => s.status === "Plt").length;
+      const top1 = validSchools[0];
+      const top2 = validSchools[1];
+
+      notesBox.innerHTML = `
+        <p>• <strong>Pilar Kompetensi Terkuat:</strong> Dimensi <strong>${topDim}</strong> mencatat rata-rata tertinggi sebesar <strong>${topVal.toFixed(2)} / 5.00</strong> pada sekolah yang telah dinilai.</p>
+        <p>• <strong>Pemetaan Jabatan Kepala Sekolah:</strong> Dari ${sortedStats.length} SD binaan, terdapat <strong>${sortedStats.length - pltCount} Kepala Sekolah Definitif</strong> dan <strong>${pltCount} Pelaksana Tugas (Plt)</strong>.</p>
+        <p>• <strong>Fokus Supervisi Klinis:</strong> ${lowestSchool ? `<strong>${lowestSchool.nama}</strong> (${lowestSchool.kepsek}) menjadi prioritas pendampingan klinis pada aspek Manajerial & RKAS berbasis data.` : "Seluruh sekolah berada pada kategori baik."}</p>
+      `;
+
+      recBox.innerHTML = `
+        <div class="bg-white p-3.5 rounded-xl border border-blue-100 shadow-sm">
+          <div class="font-extrabold text-blue-950 mb-1">1. Intervensi Presisi & Supervisi Klinis</div>
+          <p>Pendampingan terfokus bagi ${lowestSchool ? `<strong>${lowestSchool.nama}</strong>` : "sekolah prioritas"} dan Kepala Sekolah berstatus Plt dalam penyusunan RKS/RKAS berbasis Rapor Pendidikan serta Monev program.</p>
+        </div>
+        <div class="bg-white p-3.5 rounded-xl border border-blue-100 shadow-sm">
+          <div class="font-extrabold text-blue-950 mb-1">2. Pemberdayaan Peer Mentoring KKKS</div>
+          <p>Menugaskan ${top1 ? `Kepala <strong>${top1.nama}</strong> (${top1.composite.toFixed(2)})` : "Kepala Sekolah berpredikat Ahli"} ${top2 ? `dan <strong>${top2.nama}</strong> (${top2.composite.toFixed(2)})` : ""} sebagai mentor praktik baik di forum KKKS Kecamatan.</p>
+        </div>
+        <div class="bg-white p-3.5 rounded-xl border border-blue-100 shadow-sm">
+          <div class="font-extrabold text-blue-950 mb-1">3. Akselerasi Supervisi Digital Pengawas</div>
+          <p>Pemanfaatan instrumen digital 30 sub-indikator berbasis web oleh Pengawas Pembina untuk memetakan kebutuhan pembinaan sekolah secara real-time dan terukur.</p>
+        </div>
+        <div class="bg-white p-3.5 rounded-xl border border-blue-100 shadow-sm">
+          <div class="font-extrabold text-blue-950 mb-1">4. Triangulasi Multi-Rater 360° Berkelanjutan</div>
+          <p>Melembagakan survei anonim 5 unsur (Pengawas, Guru, Tendik/TU, Orang Tua, dan Murid) setiap semester sebagai kompas mutu kepemimpinan SD di Kabupaten Subang.</p>
+        </div>
+      `;
+    }
+
+    function resetEvaluationsToSeed() {
+      evaluations = generateInitialEvaluations();
+      saveEvalsToStorage();
+      renderDashboard();
+      if (!document.getElementById("view-manage").classList.contains("hidden")) {
+        renderManageTable();
+      }
+      showToast("Data simulasi skor 360° (38 SD lengkap 5 instrumen) berhasil dimuat.", "info");
+    }
+
+    function clearAllEvaluations() {
+      evaluations = [];
+      saveEvalsToStorage();
+      renderManageTable();
+      if (!document.getElementById("view-dashboard").classList.contains("hidden")) {
+        renderDashboard();
+      }
+      showToast("Seluruh isian instrumen telah dikosongkan kembali (0/5).", "info");
+    }
+
+    // 4. LOGIKA TAB 3: KELOLA DATA SEKOLAH & KEPALA SEKOLAH (CRUD + GRAFIK KELENGKAPAN 5 INSTRUMEN)
+    function renderManageCompletionChart(filteredSchools) {
+      const rolesList = [
+        { key: "Pengawas Sekolah", short: "Pengawas" },
+        { key: "Guru", short: "Guru" },
+        { key: "Tata Usaha", short: "TU" },
+        { key: "Orang Tua", short: "Ortu" },
+        { key: "Murid", short: "Murid" }
+      ];
+
+      let lengkapCount = 0;
+      let sebagianCount = 0;
+      let belumCount = 0;
+
+      const labels = [];
+      const filledCounts = [];
+      const missingCounts = [];
+      const schoolDetails = [];
+
+      filteredSchools.forEach(sch => {
+        const schEvals = evaluations.filter(ev => ev.schoolId === sch.id);
+        const filledRoles = rolesList.filter(r => schEvals.some(ev => ev.role === r.key)).map(r => r.short);
+        const missingRoles = rolesList.filter(r => !schEvals.some(ev => ev.role === r.key)).map(r => r.short);
+
+        const filled = filledRoles.length;
+        const missing = 5 - filled;
+
+        if (filled === 5) lengkapCount++;
+        else if (filled > 0) sebagianCount++;
+        else belumCount++;
+
+        labels.push(sch.nama.replace(/^SDN\s+/i, ""));
+        filledCounts.push(filled);
+        missingCounts.push(missing);
+        schoolDetails.push({ nama: sch.nama, filledRoles, missingRoles });
+      });
+
+      const statLengkapEl = document.getElementById("manage-stat-lengkap");
+      const statSebagianEl = document.getElementById("manage-stat-sebagian");
+      const statBelumEl = document.getElementById("manage-stat-belum");
+      if (statLengkapEl) statLengkapEl.textContent = `Lengkap (5/5): ${lengkapCount} SD`;
+      if (statSebagianEl) statSebagianEl.textContent = `Sebagian (1–4): ${sebagianCount} SD`;
+      if (statBelumEl) statBelumEl.textContent = `Belum Mengisi (0/5): ${belumCount} SD`;
+
+      const canvas = document.getElementById("chart-manage-completion");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      if (manageCompletionChart) manageCompletionChart.destroy();
+
+      manageCompletionChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: "Sudah Mengisi (dari 5 Instrumen)",
+              data: filledCounts,
+              backgroundColor: "#10b981",
+              borderRadius: 4
+            },
+            {
+              label: "Belum Mengisi (Sisa Instrumen)",
+              data: missingCounts,
+              backgroundColor: "#fca5a5",
+              borderRadius: 4
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: "top",
+              labels: { boxWidth: 14, font: { size: 11, weight: "bold" } }
+            },
+            tooltip: {
+              callbacks: {
+                title: (items) => {
+                  const idx = items[0].dataIndex;
+                  return schoolDetails[idx].nama;
+                },
+                afterBody: (items) => {
+                  const idx = items[0].dataIndex;
+                  const info = schoolDetails[idx];
+                  const sudahText = info.filledRoles.length > 0 ? info.filledRoles.join(", ") : "Belum ada";
+                  const belumText = info.missingRoles.length > 0 ? info.missingRoles.join(", ") : "Lengkap semua";
+                  return [
+                    `Sudah Terisi (${info.filledRoles.length}/5): ${sudahText}`,
+                    `Belum Terisi (${info.missingRoles.length}/5): ${belumText}`
+                  ];
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              stacked: true,
+              grid: { display: false },
+              ticks: {
+                autoSkip: false,
+                maxRotation: 65,
+                minRotation: 45,
+                font: { size: 9, weight: "bold" },
+                color: "#0f172a"
+              }
+            },
+            y: {
+              stacked: true,
+              min: 0,
+              max: 5,
+              ticks: {
+                stepSize: 1,
+                font: { size: 10, weight: "bold" },
+                callback: (val) => `${val} Instrumen`
+              },
+              grid: { color: "#e2e8f0" }
+            }
+          }
+        }
+      });
+    }
+
+    function renderManageTable() {
+      const kecFilter = document.getElementById("manage-filter-kec").value;
+      const query = (document.getElementById("manage-search").value || "").toLowerCase().trim();
+      const tbody = document.getElementById("manage-table-body");
+
+      const filtered = schools.filter(s => {
+        const matchKec = kecFilter === "ALL" || s.kecamatan === kecFilter;
+        const matchQuery = !query || s.nama.toLowerCase().includes(query) || s.kepsek.toLowerCase().includes(query);
+        return matchKec && matchQuery;
+      });
+
+      // Render grafik kelengkapan 5 instrumen sesuai filter aktif
+      renderManageCompletionChart(filtered);
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="py-10 text-center text-slate-500 font-semibold">Tidak ada data sekolah yang cocok dengan filter pencarian.</td></tr>`;
+        return;
+      }
+
+      const roleBadges = [
+        { key: "Pengawas Sekolah", label: "Pengawas" },
+        { key: "Guru", label: "Guru" },
+        { key: "Tata Usaha", label: "TU" },
+        { key: "Orang Tua", label: "Ortu" },
+        { key: "Murid", label: "Murid" }
+      ];
+
+      tbody.innerHTML = filtered.map((s, idx) => {
+        const schEvals = evaluations.filter(ev => ev.schoolId === s.id);
+        const filledCount = roleBadges.filter(rb => schEvals.some(ev => ev.role === rb.key)).length;
+
+        const pillsHtml = roleBadges.map(rb => {
+          const isFilled = schEvals.some(ev => ev.role === rb.key);
+          return `<span class="px-1.5 py-0.5 rounded text-[10px] font-extrabold border ${isFilled ? "bg-emerald-100 text-emerald-900 border-emerald-300" : "bg-red-50 text-red-700 border-red-200"}" title="${rb.key}: ${isFilled ? "Sudah Mengisi" : "Belum Mengisi"}">${isFilled ? "✓" : "✕"} ${rb.label}</span>`;
+        }).join(" ");
+
+        return `
+        <tr class="hover:bg-slate-50 transition">
+          <td class="py-3 px-4 text-center font-bold text-slate-500">${idx + 1}</td>
+          <td class="py-3 px-4">
+            <span class="px-2.5 py-1 rounded-lg text-xs font-bold ${s.kecamatan === "Serangpanjang" ? "bg-blue-50 text-blue-900 border border-blue-200" : "bg-emerald-50 text-emerald-900 border border-emerald-200"}">
+              ${s.kecamatan}
+            </span>
+          </td>
+          <td class="py-3 px-4 font-extrabold text-slate-900">${s.nama}</td>
+          <td class="py-3 px-4 font-bold text-slate-800">${s.kepsek}</td>
+          <td class="py-3 px-4 text-center">
+            <span class="px-2.5 py-1 rounded-full text-[11px] font-extrabold ${s.status === "Plt" ? "bg-amber-100 text-amber-900 border border-amber-300" : "bg-emerald-100 text-emerald-800 border border-emerald-300"}">
+              ${s.status === "Plt" ? "PLT" : "DEFINITIF"}
+            </span>
+          </td>
+          <td class="py-3 px-4">
+            <div class="flex flex-col items-center gap-1">
+              <span class="text-[11px] font-extrabold ${filledCount === 5 ? "text-emerald-700" : (filledCount > 0 ? "text-amber-700" : "text-red-600")}">
+                ${filledCount}/5 Instrumen Terisi
+              </span>
+              <div class="flex flex-wrap justify-center gap-1">
+                ${pillsHtml}
+              </div>
+            </div>
+          </td>
+          <td class="py-3 px-4 text-center">
+            <div class="inline-flex items-center gap-1.5">
+              <button type="button" onclick="openSchoolModal('${s.id}')" class="px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-900 border border-blue-200 text-xs font-extrabold transition">
+                ✏️ Edit
+              </button>
+              <button type="button" onclick="openDeleteModal('${s.id}')" class="px-2.5 py-1.5 rounded-lg bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 text-xs font-bold transition" title="Hapus Sekolah">
+                🗑️
+              </button>
+            </div>
+          </td>
+        </tr>
+      `;
+      }).join("");
+    }
+
+    function openSchoolModal(schoolId = null) {
+      const modal = document.getElementById("school-modal");
+      const title = document.getElementById("modal-title");
+      const idInput = document.getElementById("modal-school-id");
+      const kecInput = document.getElementById("modal-kecamatan");
+      const namaInput = document.getElementById("modal-nama-sekolah");
+      const kepsekInput = document.getElementById("modal-nama-kepsek");
+
+      if (schoolId) {
+        const sch = schools.find(s => s.id === schoolId);
+        if (!sch) return;
+        title.textContent = "Edit Data Sekolah & Kepala Sekolah";
+        idInput.value = sch.id;
+        kecInput.value = sch.kecamatan;
+        namaInput.value = sch.nama;
+        kepsekInput.value = sch.kepsek;
+        const radio = document.querySelector(`input[name="modal_status"][value="${sch.status}"]`);
+        if (radio) radio.checked = true;
+      } else {
+        title.textContent = "Tambah Sekolah Dasar Baru";
+        idInput.value = "";
+        kecInput.value = "Serangpanjang";
+        namaInput.value = "";
+        kepsekInput.value = "";
+        const radio = document.querySelector(`input[name="modal_status"][value="Definitif"]`);
+        if (radio) radio.checked = true;
+      }
+
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+      setTimeout(() => namaInput.focus(), 60);
+    }
+
+    function closeSchoolModal() {
+      const modal = document.getElementById("school-modal");
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+
+    function saveSchoolModal(e) {
+      e.preventDefault();
+      const id = document.getElementById("modal-school-id").value;
+      const kecamatan = document.getElementById("modal-kecamatan").value;
+      const nama = document.getElementById("modal-nama-sekolah").value.trim().toUpperCase();
+      const kepsek = document.getElementById("modal-nama-kepsek").value.trim();
+      const status = document.querySelector('input[name="modal_status"]:checked')?.value || "Definitif";
+
+      if (!nama || !kepsek) {
+        showToast("Nama sekolah dan nama Kepala Sekolah wajib diisi.", "error");
+        return;
+      }
+
+      if (id) {
+        const idx = schools.findIndex(s => s.id === id);
+        if (idx !== -1) {
+          schools[idx] = { ...schools[idx], kecamatan, nama, kepsek, status };
+          showToast(`Data ${nama} (${kepsek}) berhasil diperbarui!`, "success");
+        }
+      } else {
+        const newId = `SD-${Date.now()}`;
+        schools.push({ id: newId, kecamatan, nama, kepsek, status });
+        showToast(`Sekolah baru ${nama} berhasil ditambahkan ke database (0/5 instrumen terisi).`, "success");
+      }
+
+      saveSchoolsToStorage();
+      closeSchoolModal();
+      renderManageTable();
+      handleKecamatanChange();
+    }
+
+    function openDeleteModal(schoolId) {
+      const sch = schools.find(s => s.id === schoolId);
+      if (!sch) return;
+      document.getElementById("delete-modal-text").textContent = `Apakah Anda yakin ingin menghapus ${sch.nama} (KS: ${sch.kepsek}) dari daftar wilayah binaan?`;
+      const btn = document.getElementById("confirm-delete-btn");
+      btn.onclick = () => {
+        schools = schools.filter(s => s.id !== schoolId);
+        evaluations = evaluations.filter(ev => ev.schoolId !== schoolId);
+        saveSchoolsToStorage();
+        saveEvalsToStorage();
+        closeDeleteModal();
+        renderManageTable();
+        handleKecamatanChange();
+        showToast(`Data ${sch.nama} telah dihapus.`, "info");
+      };
+      const modal = document.getElementById("delete-modal");
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    }
+
+    function closeDeleteModal() {
+      const modal = document.getElementById("delete-modal");
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+
+    function resetMasterSchools() {
+      schools = JSON.parse(JSON.stringify(INITIAL_SCHOOLS));
+      evaluations = generateInitialEvaluations();
+      saveSchoolsToStorage();
+      saveEvalsToStorage();
+      renderManageTable();
+      handleKecamatanChange();
+      showToast("Database 38 SD & Kepala Sekolah telah dikembalikan ke data awal.", "success");
+    }
+
+    function exportSchoolsCSV() {
+      const headers = ["No", "ID", "Kecamatan", "Nama Sekolah", "Nama Kepala Sekolah", "Status Jabatan"];
+      const rows = schools.map((s, i) => [
+        i + 1,
+        `"${s.id}"`,
+        `"${s.kecamatan}"`,
+        `"${s.nama.replace(/"/g, '""')}"`,
+        `"${s.kepsek.replace(/"/g, '""')}"`,
+        `"${s.status}"`
+      ]);
+      const csvContent = "data:text/csv;charset=utf-8," + [headers.join(","), ...rows.map(r => r.join(","))].join("\n");
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "Database_SD_PKKS_Serangpanjang_Sagalaherang_2026.csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast("File CSV Database 38 SD berhasil diunduh.", "success");
+    }
+
+    // 5. NAVIGASI TAB, PROTEKSI PIN (99) & NOTIFIKASI TOAST
+    function switchTab(tab) {
+      if ((tab === "dashboard" || tab === "manage") && !isAdminUnlocked) {
+        pendingTargetTab = tab;
+        openPinModal(tab);
+        return;
+      }
+
+      const views = {
+        form: document.getElementById("view-form"),
+        dashboard: document.getElementById("view-dashboard"),
+        manage: document.getElementById("view-manage")
+      };
+
+      const buttons = {
+        form: document.getElementById("tab-btn-form"),
+        dashboard: document.getElementById("tab-btn-dashboard"),
+        manage: document.getElementById("tab-btn-manage")
+      };
+
+      Object.keys(views).forEach(key => {
+        if (!views[key] || !buttons[key]) return;
+        if (key === tab) {
+          views[key].classList.remove("hidden");
+          buttons[key].className = "flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap bg-white text-slate-900 shadow-md";
+        } else {
+          views[key].classList.add("hidden");
+          buttons[key].className = "flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap text-slate-300 hover:text-white";
+        }
+      });
+
+      if (tab === "dashboard") {
+        handleDashboardKecChange();
+      } else if (tab === "manage") {
+        renderManageTable();
+      }
+    }
+
+    function openPinModal(targetTab) {
+      const modal = document.getElementById("pin-modal");
+      const desc = document.getElementById("pin-modal-target-desc");
+      const input = document.getElementById("input-admin-pin");
+      const err = document.getElementById("pin-error-msg");
+
+      desc.textContent = targetTab === "dashboard"
+        ? "Masukkan PIN Pengawas untuk membuka Executive Summary-PKKS."
+        : "Masukkan PIN Pengawas untuk membuka menu Kelola Data Sekolah & KS.";
+
+      input.value = "";
+      err.classList.add("hidden");
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+      setTimeout(() => input.focus(), 60);
+    }
+
+    function closePinModal() {
+      const modal = document.getElementById("pin-modal");
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+      pendingTargetTab = null;
+    }
+
+    function appendPinDigit(digit) {
+      const input = document.getElementById("input-admin-pin");
+      const err = document.getElementById("pin-error-msg");
+      err.classList.add("hidden");
+      if (input.value.length < 4) {
+        input.value += digit;
+      }
+    }
+
+    function clearPinInput() {
+      const input = document.getElementById("input-admin-pin");
+      const err = document.getElementById("pin-error-msg");
+      input.value = "";
+      err.classList.add("hidden");
+      input.focus();
+    }
+
+    function verifyPinSubmit(e) {
+      e.preventDefault();
+      const input = document.getElementById("input-admin-pin");
+      const err = document.getElementById("pin-error-msg");
+
+      if (input.value.trim() === ADMIN_PIN) {
+        isAdminUnlocked = true;
+        document.getElementById("lock-icon-dashboard").textContent = "🔓";
+        document.getElementById("lock-icon-manage").textContent = "🔓";
+        const relockBtn = document.getElementById("btn-relock-admin");
+        relockBtn.classList.remove("hidden");
+        relockBtn.classList.add("flex");
+
+        const target = pendingTargetTab || "dashboard";
+        closePinModal();
+        showToast("Akses Pengawas dibuka! Selamat datang, Ibu Titi Wahyuni, S.Pd.", "success");
+        switchTab(target);
+      } else {
+        err.classList.remove("hidden");
+        input.value = "";
+        input.focus();
+      }
+    }
+
+    function lockAdminAccess() {
+      isAdminUnlocked = false;
+      document.getElementById("lock-icon-dashboard").textContent = "🔒";
+      document.getElementById("lock-icon-manage").textContent = "🔒";
+      const relockBtn = document.getElementById("btn-relock-admin");
+      relockBtn.classList.add("hidden");
+      relockBtn.classList.remove("flex");
+
+      switchTab("form");
+      showToast("Menu Executive Summary & Kelola Data telah dikunci kembali.", "info");
+    }
+
+    let toastTimer = null;
+    function showToast(message, type = "success") {
+      const toast = document.getElementById("toast");
+      const box = document.getElementById("toast-box");
+      const icon = document.getElementById("toast-icon");
+      const msg = document.getElementById("toast-msg");
+
+      msg.textContent = message;
+      if (type === "error") {
+        box.className = "flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-2xl border text-sm font-semibold bg-red-950 text-white border-red-700";
+        icon.textContent = "⚠️";
+      } else if (type === "info") {
+        box.className = "flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-2xl border text-sm font-semibold bg-blue-950 text-white border-blue-700";
+        icon.textContent = "ℹ️";
+      } else {
+        box.className = "flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-2xl border text-sm font-semibold bg-emerald-950 text-white border-emerald-600";
+        icon.textContent = "✅";
+      }
+
+      toast.classList.remove("hidden");
+      requestAnimationFrame(() => {
+        toast.classList.remove("translate-y-3", "opacity-0");
+      });
+
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add("translate-y-3", "opacity-0");
+        setTimeout(() => toast.classList.add("hidden"), 300);
+      }, 3800);
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      loadState();
+    });
+  </script>
+</body>
+</html>
